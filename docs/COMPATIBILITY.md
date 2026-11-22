@@ -56,9 +56,11 @@
 
 `footer.ut` 里 `L.require('menu-brutal')` 会实例化 `menu-brutal.js` 返回的类。主题必须自己做三件事：
 
-1. `#topmenu` 填主菜单（一级 + 二级下拉）；
+1. `#mainmenu` 填左侧导航（一级菜单 + 可展开的二级菜单，一级带图标）；
 2. `#tabmenu` 填当前节点的标签页（`dispatchpath` 第 4 段起）；
 3. `#modemenu` 填页脚面包屑（多 mode 时才显示）。
+
+`#mainmenu` 是 `header.ut` 里的空 `<aside>`，`menu-brutal.js` 在菜单加载完成后填充并显示它。移动端同一个节点变成抽屉（`position: fixed` + `transform`），`#navscrim` 负责不透明遮罩。
 
 `L.env.dispatchpath` 在 24.10 与 25.12 里结构一致，例如
 `['admin', 'status', 'overview']`。菜单项的激活判断必须按**前缀**匹配，否则父级和子级只能亮一个。

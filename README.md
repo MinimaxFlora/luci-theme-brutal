@@ -5,12 +5,17 @@
 
 ![overview](docs/screenshots/overview.png)
 
-| 桌面 | 登录 | 手机 |
-|---|---|---|
-| ![overview](docs/screenshots/overview.png) | ![login](docs/screenshots/login.png) | ![mobile](docs/screenshots/overview-mobile.png) |
+| 状态（侧边栏） | 系统设置 |
+|---|---|
+| ![overview](docs/screenshots/overview.png) | ![system](docs/screenshots/system.png) |
+
+| 网络接口 | 登录 | 手机 | 手机抽屉 |
+|---|---|---|---|
+| ![network](docs/screenshots/network.png) | ![login](docs/screenshots/login.png) | ![mobile](docs/screenshots/overview-mobile.png) | ![menu](docs/screenshots/menu-mobile.png) |
 
 ## 特性
 
+- **左侧导航栏**：一级菜单带线性图标，可展开二级菜单；移动端变成抽屉，黑色遮罩盖住内容。
 - **纯 CSS 变量驱动**：调色板、间距、阴影集中在 `:root` 的 `--br-*` 变量里，二改只需动一处。
 - **真实的物理反馈**：hover 时阴影从 4px 涨到 10px 并向左上抬起 4px；`:active` 位移 6px、阴影归零，像被按平。
 - **完整的 LuCI 组件覆盖**：表单、表格、标签页、下拉、动态列表、弹窗、UCI 差异、文件浏览器、网络接口卡片、独立登录页。
@@ -99,15 +104,16 @@ ls /usr/share/ucode/luci/template/themes/brutal/header.ut
 htdocs/luci-static/brutal/          # 样式与图标（安装到 /www/luci-static/brutal）
   cascade.css                       # 全部组件样式
   mobile.css                        # 窄屏触控微调
+  icons/*.svg                       # 侧边栏线性图标（11 个，CSS mask 着色）
   logo.svg / logo_48.png
 htdocs/luci-static/resources/
-  menu-brutal.js                    # 顶部菜单、标签页、面包屑、移动端抽屉
+  menu-brutal.js                    # 侧边栏、标签页、面包屑、移动端抽屉
 ucode/template/themes/brutal/
   header.ut / footer.ut / sysauth.ut
 root/etc/uci-defaults/30_luci-theme-brutal
 ```
 
-主题名是 `brutal`，因此资源目录、模板目录、`menu-brutal` 模块名三者必须一致；改名要一起改。
+主题名是 `brutal`，因此资源目录、模板目录、`menu-brutal` 模块名三者必须一致；改名要一起改。侧边栏由 `menu-brutal.js` 填进 `#mainmenu`，图标名按菜单节点名映射（`status`、`system`、`services`、`network`、`nas`、`store`、`vpn`、`quickstart`、`network_guide`、`logout`），新菜单没有对应图标时回落到 `default.svg`。
 
 登录页是独立的整页表单（`sysauth.ut`），不依赖 `ui.showModal` 和额外的视图脚本：表单直接 POST 到当前 URL，只用了 24.10 起就存在的模板变量（`fuser`、`duser`、`REQUEST_URI`），因此 24.10 与 25.12 共用同一份模板。
 
@@ -123,7 +129,7 @@ ucode -T, -s -cno-interp,dynlink=fs,dynlink=uci,dynlink=luci.core \
   -o /tmp/header.uc ucode/template/themes/brutal/header.ut
 ```
 
-本地预览可以直接在浏览器里打开 `docs/preview/overview.html`，它引用了真实的 `cascade.css`，并复刻了 LuCI 的 DOM 结构。
+改完后在真机上验证：`scp` 覆盖 `/www/luci-static/brutal/`、`/www/luci-static/resources/menu-brutal.js` 和 `/usr/share/ucode/luci/template/themes/brutal/`，清掉 `/tmp/luci-indexcache.*` 与 `/tmp/luci-modulecache`，然后强制刷新页面。
 
 ## 兼容性
 
@@ -132,7 +138,9 @@ LuCI 的主题解析、24.10 与 25.12 的模板变量差异、ipk/apk 的 postr
 | 发行版 | 包格式 | 包管理器 | 状态 |
 |---|---|---|---|
 | OpenWrt 24.10.x | `.ipk` | opkg | SDK 构建验证 |
-| OpenWrt 25.12.x | `.apk` | apk-tools 3 | SDK 构建验证 |
+| OpenWrt 25.12.x | `.apk` | apk-tools 3 | iStoreOS 25.12.6 (x86_64) 实机安装验证 |
+
+菜单模块填的是 `#mainmenu`（侧边栏）而不是 bootstrap 的 `#topmenu`，标签页仍在 `#tabmenu`，页脚面包屑仍在 `#modemenu`。
 
 主题只使用 LuCI 24.10 起就存在的模板变量（`dispatched`、`media`、`version`、`blank_page`、`node.css`、`ctx.path`、`ctx.request_path`），两条分支共用同一份源码。25.12 新增的认证插件字段（`auth_fields` / `auth_html`）只在 LuCI master 上存在，这里刻意不引用，以免在 24.10/25.12 上报 undefined。
 

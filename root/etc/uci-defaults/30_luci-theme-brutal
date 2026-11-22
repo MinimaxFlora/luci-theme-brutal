@@ -19,12 +19,21 @@ set_opt() {
 	return 0
 }
 
+had_theme=0
+if uci -q get luci.themes.Brutal >/dev/null 2>&1; then
+	had_theme=1
+fi
+
 changed=0
 
 set_opt themes.Brutal /luci-static/brutal || exit 1
 
-if [ "$PKG_UPGRADE" != 1 ] && [ "$changed" = 1 ]; then
-	set_opt main.mediaurlbase /luci-static/brutal || exit 1
+# mediaurlbase already points at another theme on most systems, so it has to be
+# overwritten explicitly: set_opt would leave it alone. Only a genuinely new
+# installation may do that; upgrades must not steal the selection.
+if [ "$PKG_UPGRADE" != 1 ] && [ "$had_theme" = 0 ]; then
+	uci set luci.main.mediaurlbase=/luci-static/brutal || exit 1
+	changed=1
 fi
 
 if [ "$changed" = 1 ]; then

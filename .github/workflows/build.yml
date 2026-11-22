@@ -142,8 +142,12 @@ jobs:
                 grep -E '^(Package|Version|Architecture|Depends|Section):'
               ;;
             apk)
-              sdk/staging_dir/host/bin/apk --allow-untrusted adbdump "${pkg}" |
-                sed -n '1,40p'
+              if [ -x sdk/staging_dir/host/bin/apk ]; then
+                sdk/staging_dir/host/bin/apk --allow-untrusted adbdump "${pkg}" |
+                  sed -n '1,40p'
+              else
+                echo "apk host tool not present in this SDK; skipping metadata dump"
+              fi
               ;;
           esac
 

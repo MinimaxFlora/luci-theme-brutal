@@ -60,6 +60,9 @@ for file in \
 	htdocs/luci-static/brutal/mobile.css \
 	htdocs/luci-static/brutal/logo.svg \
 	htdocs/luci-static/brutal/logo_48.png \
+	htdocs/luci-static/brutal/icons/status.svg \
+	htdocs/luci-static/brutal/icons/system.svg \
+	htdocs/luci-static/brutal/icons/network.svg \
 	htdocs/luci-static/resources/menu-brutal.js
 do
 	[ -s "$file" ] || fail "missing or empty: $file"

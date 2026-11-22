@@ -9,7 +9,6 @@
 
 	const boardinfo = ubus.call('system', 'board');
 	const hostname = striptags(boardinfo?.hostname ?? '?');
-	const model = striptags(boardinfo?.model ?? '');
 	const distname = striptags(version?.distname ?? 'OpenWrt');
 	const distversion = striptags(version?.distversion ?? '');
 	const distrevision = striptags(version?.distrevision ?? '');
@@ -58,56 +57,56 @@
 				<span class="brand-suffix">LuCI</span>
 			</a>
 
-			<button type="button" class="nav-toggle" id="navtoggle" aria-expanded="false" aria-controls="topmenu" aria-label="{{ entityencode(_('Toggle navigation'), true) }}">
+			<span class="header-tag">LuCI // BRUTAL</span>
+
+			<button type="button" class="nav-toggle" id="navtoggle" aria-expanded="false" aria-controls="mainmenu" aria-label="{{ entityencode(_('Toggle navigation'), true) }}">
 				<span class="nav-toggle-icon" aria-hidden="true"></span>
 				<span class="nav-toggle-label">{{ _('Menu') }}</span>
 			</button>
-
-			<nav class="nav-wrap" aria-label="{{ _('Main navigation') }}">
-				<ul class="nav" id="topmenu" style="display:none"></ul>
-			</nav>
-
-			<div id="indicators" class="pull-right"></div>
 		</header>
 
 		<div class="statusbar">
 			<span class="statusbar-item statusbar-dist">{{ distname }} {{ distversion }}</span>
-			{% if (length(model)): %}
-			<span class="statusbar-item statusbar-model">{{ model }}</span>
-			{% endif %}
 			<span class="statusbar-item statusbar-luci">{{ luciname }} {{ luciversion }}</span>
 			{% if (length(distrevision)): %}
-			<span class="statusbar-item statusbar-rev">{{ distrevision }}</span>
+			<span class="statusbar-rev">BUILD {{ distrevision }}</span>
 			{% endif %}
+			<div id="indicators"></div>
 		</div>
 
-		<div id="maincontent" class="container" tabindex="-1">
-			{% if (getuid() == 0 && getspnam('root')?.pwdp === ''): %}
-			<div class="alert-message warning">
-				<h4>{{ _('No password set!') }}</h4>
-				<p>{{ _('There is no password set on this router. Please configure a root password to protect the web interface.') }}</p>
-				{% if (dispatcher.lookup("admin/system/admin")): %}
-				<div class="right"><a class="btn" href="{{ dispatcher.build_url("admin/system/admin") }}">{{ _('Go to password configuration...') }}</a></div>
-				{% endif %}
-			</div>
-			{% endif %}
+		<div id="navscrim" class="nav-scrim" aria-hidden="true"></div>
 
-			{% if (boardinfo.rootfs_type == "initramfs"): %}
-			<div class="alert-message warning">
-				<h4>{{ _('System running in recovery (initramfs) mode.') }}</h4>
-				<p>{{ _('No changes to settings will be stored and are lost after rebooting. This mode should only be used to install a firmware upgrade') }}</p>
-				{% if (dispatcher.lookup("admin/system/flash")): %}
-				<div class="right"><a class="btn" href="{{ dispatcher.build_url("admin/system/flash") }}">{{ _('Go to firmware upgrade...') }}</a></div>
-				{% endif %}
-			</div>
-			{% endif %}
+		<div class="shell">
+			<aside id="mainmenu" class="sidebar" style="display:none" aria-label="{{ entityencode(_('Main navigation'), true) }}"></aside>
 
-			<noscript>
-				<div class="alert-message warning">
-					<h4>{{ _('JavaScript required!') }}</h4>
-					<p>{{ _('You must enable JavaScript in your browser or LuCI will not work properly.') }}</p>
-				</div>
-			</noscript>
+			<div class="shell-content">
+				<div id="maincontent" class="container" tabindex="-1">
+					{% if (getuid() == 0 && getspnam('root')?.pwdp === ''): %}
+					<div class="alert-message warning">
+						<h4>{{ _('No password set!') }}</h4>
+						<p>{{ _('There is no password set on this router. Please configure a root password to protect the web interface.') }}</p>
+						{% if (dispatcher.lookup("admin/system/admin")): %}
+						<div class="right"><a class="btn" href="{{ dispatcher.build_url("admin/system/admin") }}">{{ _('Go to password configuration...') }}</a></div>
+						{% endif %}
+					</div>
+					{% endif %}
 
-			<div id="tabmenu" class="tabmenu" style="display:none"></div>
+					{% if (boardinfo.rootfs_type == "initramfs"): %}
+					<div class="alert-message warning">
+						<h4>{{ _('System running in recovery (initramfs) mode.') }}</h4>
+						<p>{{ _('No changes to settings will be stored and are lost after rebooting. This mode should only be used to install a firmware upgrade') }}</p>
+						{% if (dispatcher.lookup("admin/system/flash")): %}
+						<div class="right"><a class="btn" href="{{ dispatcher.build_url("admin/system/flash") }}">{{ _('Go to firmware upgrade...') }}</a></div>
+						{% endif %}
+					</div>
+					{% endif %}
+
+					<noscript>
+						<div class="alert-message warning">
+							<h4>{{ _('JavaScript required!') }}</h4>
+							<p>{{ _('You must enable JavaScript in your browser or LuCI will not work properly.') }}</p>
+						</div>
+					</noscript>
+
+					<div id="tabmenu" class="tabmenu" style="display:none"></div>
 		{% endif %}
