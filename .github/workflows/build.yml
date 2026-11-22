@@ -28,7 +28,7 @@ jobs:
             format: apk
     steps:
       - name: Checkout theme
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install build dependencies
         run: |
@@ -128,7 +128,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p dist
-          find sdk/bin/packages -type f -name "*.${FORMAT}" -exec cp -v {} dist/ \;
+          find sdk/bin/packages -type f -name "luci-theme-brutal*.${FORMAT}" -exec cp -v {} dist/ \;
           count="$(find dist -maxdepth 1 -type f -name "*.${FORMAT}" | wc -l)"
           if [ "${count}" -ne 1 ]; then
             echo "::error::Expected exactly one .${FORMAT} artifact, found ${count}"
