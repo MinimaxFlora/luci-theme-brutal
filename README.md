@@ -34,23 +34,25 @@
 
 ## 安装
 
-### 从软件源安装（推荐）
+### 从 Release 安装
+
+每个 tag 会由 CI 上传两种格式（`PKGARCH=all`，任何架构都能装）：
 
 ```sh
 # 24.10 / opkg
-opkg update
-opkg install luci-theme-brutal
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal_1.0.0-r1_all.ipk
+opkg install ./luci-theme-brutal_1.0.0-r1_all.ipk
 ```
 
 ```sh
-# 25.12 / apk
-apk update
-apk add luci-theme-brutal
+# 25.12 / apk（包未签名，需 --allow-untrusted）
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal-1.0.0-r1.apk
+apk add --allow-untrusted ./luci-theme-brutal-1.0.0-r1.apk
 ```
 
 安装脚本会注册 `luci.themes.Brutal` 并在**全新安装**时把 `luci.main.mediaurlbase` 指到 `/luci-static/brutal`；升级不会覆盖你当前选中的主题。
 
-安装后如果页面没变，清一次缓存并刷新：
+安装后如果页面没变，切到「系统 → 系统 → 语言和界面 → 设计」确认选中 Brutal，或清一次缓存并刷新：
 
 ```sh
 rm -rf /tmp/luci-indexcache.* /tmp/luci-modulecache
