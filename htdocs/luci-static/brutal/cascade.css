@@ -1377,6 +1377,7 @@ select option {
 	width: 100%;
 	border: 0;
 	background-color: transparent;
+	background-image: none;
 }
 
 .cbi-select::before {
@@ -1526,6 +1527,17 @@ input[type="radio"][disabled] {
 
 .cbi-dropdown[open] > ul.preview {
 	display: flex;
+}
+
+.cbi-dropdown[multiple][more] > .more,
+.cbi-dropdown[multiple][empty] > .more {
+	display: flex;
+}
+
+.cbi-dropdown[multiple] > ul > li > label {
+	display: flex;
+	flex-grow: 1;
+	align-items: center;
 }
 
 .cbi-dropdown > .open,
