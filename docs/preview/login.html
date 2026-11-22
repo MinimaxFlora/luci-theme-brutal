@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Brutal theme - login preview</title>
+<link rel="stylesheet" href="../../htdocs/luci-static/brutal/cascade.css">
+</head>
+<body class="lang_en page-blank">
+
+<main class="login-page">
+	<div class="login-card">
+		<div class="login-head">
+			<span class="login-stamp" aria-hidden="true">BRUTAL</span>
+			<h1 class="login-title">LuCI</h1>
+			<p class="login-note">brutal-rt // Router control</p>
+		</div>
+
+		<form method="post" action="#" class="login-form">
+			<div class="alert-message error" role="alert">
+				Invalid username and/or password! Please try again.
+			</div>
+
+			<div class="cbi-value">
+				<label class="cbi-value-title" for="luci_username">Username</label>
+				<div class="cbi-value-field">
+					<input id="luci_username" type="text" value="root" autocomplete="username">
+				</div>
+			</div>
+
+			<div class="cbi-value">
+				<label class="cbi-value-title" for="luci_password">Password</label>
+				<div class="cbi-value-field">
+					<input id="luci_password" type="password" autocomplete="current-password">
+				</div>
+			</div>
+
+			<button type="submit" class="btn cbi-button-positive important">Log in</button>
+		</form>
+
+		<p class="login-foot">OpenWrt 25.12 / LuCI 25.12</p>
+	</div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Brutal theme - component preview</title>
+<link rel="stylesheet" href="../../htdocs/luci-static/brutal/cascade.css">
+</head>
+<body class="lang_en" data-page="admin-status-overview">
+
+<a class="skip-link" href="#maincontent">Skip to content</a>
+
+<header>
+	<a class="brand" href="#">
+		<span class="brand-mark" aria-hidden="true"></span>
+		<span class="brand-name">BRUTAL-RT</span>
+		<span class="brand-suffix">LuCI</span>
+	</a>
+	<button type="button" class="nav-toggle" aria-expanded="false">
+		<span class="nav-toggle-icon" aria-hidden="true"></span>
+		<span class="nav-toggle-label">Menu</span>
+	</button>
+	<nav class="nav-wrap">
+		<ul class="nav">
+			<li class="active"><a href="#">Status</a></li>
+			<li class="dropdown"><a href="#" class="menu" aria-expanded="true">System</a>
+				<ul class="dropdown-menu">
+					<li><a href="#">System</a></li>
+					<li><a href="#">Administration</a></li>
+					<li><a href="#">Software</a></li>
+					<li><a href="#">Startup</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Network</a></li>
+			<li><a href="#">Services</a></li>
+			<li><a href="#">VPN</a></li>
+		</ul>
+	</nav>
+	<div id="indicators">
+		<span data-indicator="uci" data-style="active">Unsaved changes</span>
+		<span data-indicator="reboot">Reboot required</span>
+	</div>
+</header>
+
+<div class="statusbar">
+	<span class="statusbar-item statusbar-dist">OpenWrt 25.12</span>
+	<span class="statusbar-item statusbar-model">GL-MT3000</span>
+	<span class="statusbar-item statusbar-luci">LuCI 25.12</span>
+	<span class="statusbar-item statusbar-rev">r31000-abcdef0</span>
+</div>
+
+<div id="maincontent" class="container">
+	<div class="cbi-map">
+		<h2>Status Overview</h2>
+		<div class="cbi-map-descr">This page shows the current system status and configuration surface of the router.</div>
+
+		<ul class="cbi-tabmenu">
+			<li class="cbi-tab"><a href="#">Overview</a></li>
+			<li class="cbi-tab-disabled"><a href="#">Firewall</a></li>
+			<li class="cbi-tab-disabled"><a href="#">Routes</a></li>
+			<li class="cbi-tab-disabled" data-errors="2"><a href="#">Diagnostics</a></li>
+		</ul>
+
+		<div class="cbi-map-tabbed">
+			<div class="cbi-section" data-tab-title="Overview" data-tab-active="true">
+				<h3>System</h3>
+				<div class="cbi-section-descr">General information about this device. Values update on reload.</div>
+				<div class="cbi-section-node">
+					<div class="cbi-value">
+						<label class="cbi-value-title" for="hostname">Hostname</label>
+						<div class="cbi-value-field">
+							<input id="hostname" type="text" value="Brutal-RT">
+							<div class="cbi-value-description">The hostname is advertised over DHCP and mDNS.</div>
+						</div>
+					</div>
+					<div class="cbi-value">
+						<label class="cbi-value-title" for="notes">Notes</label>
+						<div class="cbi-value-field">
+							<textarea id="notes" rows="3">Uplink: 1 Gbit/s. Downlink: 1 Gbit/s.</textarea>
+						</div>
+					</div>
+					<div class="cbi-value">
+						<label class="cbi-value-title" for="proto">Protocol</label>
+						<div class="cbi-value-field">
+							<select id="proto">
+								<option>Static address</option>
+								<option selected>DHCP client</option>
+								<option>PPPoE</option>
+							</select>
+						</div>
+					</div>
+					<div class="cbi-value">
+						<label class="cbi-value-title">Options</label>
+						<div class="cbi-value-field">
+							<label class="cbi-radio"><input type="checkbox" checked> Enable IPv6</label>
+							<label class="cbi-radio"><input type="checkbox"> Force DHCP</label>
+							<label class="cbi-radio"><input type="radio" name="r" checked> Uplink</label>
+							<label class="cbi-radio"><input type="radio" name="r"> Downlink</label>
+						</div>
+					</div>
+					<div class="cbi-value">
+						<label class="cbi-value-title">Interface</label>
+						<div class="cbi-value-field">
+							<div class="cbi-dropdown">
+								<ul><li display>wan (DHCP client)</li></ul>
+								<span class="open" aria-hidden="true">&#9662;</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="cbi-section" data-tab-title="Firewall" data-tab-active="false">
+				<h3>Firewall</h3>
+			</div>
+		</div>
+
+		<div class="alert-message warning">
+			<h4>Reboot required</h4>
+			<p>Some changes need a reboot before they take effect.</p>
+		</div>
+
+		<div class="cbi-section cbi-tblsection">
+			<h3>Interfaces</h3>
+			<table class="table cbi-section-table">
+				<thead>
+					<tr class="tr cbi-section-table-titles">
+						<th class="th">Interface</th>
+						<th class="th">Status</th>
+						<th class="th">Address</th>
+						<th class="th">Traffic</th>
+						<th class="th cbi-section-actions">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="tr cbi-section-table-row" data-title="wan">
+						<td class="td" data-title="Interface"><strong>wan</strong></td>
+						<td class="td" data-title="Status"><span class="label success">Up</span></td>
+						<td class="td" data-title="Address">192.168.1.42</td>
+						<td class="td" data-title="Traffic">1.4 MB/s</td>
+						<td class="td cbi-section-actions" data-title="Actions">
+							<button class="cbi-button cbi-button-edit">Edit</button>
+							<button class="cbi-button cbi-button-remove">Delete</button>
+						</td>
+					</tr>
+					<tr class="tr cbi-section-table-row" data-title="lan">
+						<td class="td" data-title="Interface"><strong>lan</strong></td>
+						<td class="td" data-title="Status"><span class="label important">Down</span></td>
+						<td class="td" data-title="Address">10.0.0.1</td>
+						<td class="td" data-title="Traffic">0 B/s</td>
+						<td class="td cbi-section-actions" data-title="Actions">
+							<button class="cbi-button cbi-button-edit">Edit</button>
+							<button class="cbi-button cbi-button-remove">Delete</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="cbi-section-create">
+				<input class="cbi-input-text" type="text" placeholder="New interface name">
+				<button class="cbi-button cbi-button-add">Add</button>
+			</div>
+		</div>
+
+		<div class="cbi-page-actions">
+			<span class="secondary-action"><a href="#">Reset to defaults</a></span>
+			<button class="cbi-button cbi-button-reset">Reset</button>
+			<button class="cbi-button cbi-button-save">Save &amp; Apply</button>
+		</div>
+	</div>
+</div>
+
+<footer>
+	<span class="footer-credit">Powered by <a href="#">LuCI (25.12)</a> / <a href="#">OpenWrt 25.12 (r31000)</a></span>
+	<span class="footer-mark">OpenWrt // BRUTAL</span>
+	<ul class="breadcrumb" id="modemenu">
+		<li class="active"><a href="#">admin</a></li>
+		<li><a href="#">status</a></li>
+	</ul>
+</footer>
+
+</body>
+</html>

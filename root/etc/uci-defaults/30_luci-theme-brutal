@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# Copyright (C) 2026 MinimaxFlora
+# Licensed to the public under the Apache License 2.0.
+#
+# Register the theme with LuCI and, on a fresh installation only, make it the
+# active theme. $PKG_UPGRADE is set by opkg/apk while upgrading an installed
+# package: at that point the administrator's current theme choice wins.
+
+set_opt() {
+	local key="$1"
+	local val="$2"
+
+	if ! uci -q get "luci.$key" >/dev/null 2>&1; then
+		uci set "luci.$key=$val" || return 1
+		changed=1
+	fi
+
+	return 0
+}
+
+changed=0
+
+set_opt themes.Brutal /luci-static/brutal || exit 1
+
+if [ "$PKG_UPGRADE" != 1 ] && [ "$changed" = 1 ]; then
+	set_opt main.mediaurlbase /luci-static/brutal || exit 1
+fi
+
+if [ "$changed" = 1 ]; then
+	uci commit luci || exit 1
+fi
+
+exit 0

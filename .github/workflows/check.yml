@@ -1,0 +1,38 @@
+name: Check theme
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install template toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake libjson-c-dev libmd-dev
+          mkdir -p "$RUNNER_TEMP/ucode"
+          git -C "$RUNNER_TEMP/ucode" init -q
+          git -C "$RUNNER_TEMP/ucode" remote add origin https://github.com/jow-/ucode.git
+          # ucode 2026-01-16, the revision shipped by OpenWrt 25.12.
+          git -C "$RUNNER_TEMP/ucode" fetch --depth 1 origin 85922056ef7abeace3cca3ab28bc1ac2d88e31b1
+          git -C "$RUNNER_TEMP/ucode" checkout -q FETCH_HEAD
+          cmake -S "$RUNNER_TEMP/ucode" -B "$RUNNER_TEMP/ucode/build" \
+            -DUBUS_SUPPORT=OFF -DUCI_SUPPORT=OFF -DULOOP_SUPPORT=OFF -DFFI_SUPPORT=OFF
+          cmake --build "$RUNNER_TEMP/ucode/build" --target ucode fs_lib math_lib -j2
+
+      - name: Check shell, JavaScript, CSS and templates
+        run: |
+          UCODE_BIN="$RUNNER_TEMP/ucode/build/ucode" sh .github/scripts/check_theme.sh

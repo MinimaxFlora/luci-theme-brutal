@@ -1,0 +1,70 @@
+/*
+ * LuCI Brutal Theme - mobile companion sheet
+ * Copyright 2026 MinimaxFlora <zj18139624826@gmail.com>
+ * Licensed to the public under the Apache License 2.0.
+ *
+ * Loaded only on narrow devices (max-device-width: 854px). The layout itself
+ * lives in cascade.css so it also applies to a narrow desktop window; this
+ * sheet only tunes touch ergonomics.
+ */
+
+@media screen and (max-device-width: 854px) {
+	/* iOS zooms the viewport when a control under 16px receives focus. */
+	input[type="text"],
+	input[type="password"],
+	input[type="search"],
+	input[type="email"],
+	input[type="url"],
+	input[type="tel"],
+	input[type="number"],
+	input[type="date"],
+	input[type="time"],
+	textarea,
+	select,
+	.cbi-input-text,
+	.cbi-input-password,
+	.cbi-input-textarea {
+		font-size: 16px;
+	}
+
+	.btn,
+	.cbi-button {
+		min-height: 44px;
+		padding: 12px 16px;
+	}
+
+	.tabs > li > a,
+	.cbi-tabmenu > li > a {
+		padding: 12px 14px;
+	}
+
+	.cbi-dynlist > .item {
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+
+	.cbi-dropdown > ul > li {
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+
+	.cbi-tooltip {
+		position: static;
+		display: none;
+		max-width: 100%;
+		margin-top: 4px;
+	}
+
+	.cbi-tooltip-container:hover .cbi-tooltip:not(:empty),
+	.cbi-tooltip-container:focus-within .cbi-tooltip:not(:empty) {
+		display: block;
+	}
+
+	.modal {
+		box-shadow: 4px 4px 0 0 var(--br-lime);
+	}
+
+	.cbi-section {
+		box-shadow: 4px 4px 0 0 var(--br-ink);
+	}
+}
