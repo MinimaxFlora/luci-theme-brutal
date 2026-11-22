@@ -47,7 +47,7 @@ jobs:
           sums="$RUNNER_TEMP/sha256sums"
           curl -fsSL --http1.1 --retry 5 --retry-all-errors --connect-timeout 30 \
             "${base}/sha256sums" -o "${sums}"
-          line="$(grep -E "  \*?openwrt-sdk-${VERSION}-x86-64_.*Linux-x86_64\.tar\.(xz|zst)$" "${sums}" | head -n 1)"
+          line="$(grep -E "[[:space:]]\*?openwrt-sdk-${VERSION}-x86-64_.*Linux-x86_64\.tar\.(xz|zst)$" "${sums}" | head -n 1)"
           if [ -z "${line}" ]; then
             echo "::error::No x86-64 SDK found for OpenWrt ${VERSION}"
             exit 1
