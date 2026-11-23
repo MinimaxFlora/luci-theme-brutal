@@ -310,3 +310,6 @@ msgstr "保存设置"
 
 msgid "Save current settings"
 msgstr "保存当前设置"
+
+msgid "Select a file first."
+msgstr "请先选择一个文件。"

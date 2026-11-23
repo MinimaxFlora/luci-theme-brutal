@@ -3954,11 +3954,47 @@ header .container {
 
 
 .brutal-branding-actions,
-.brutal-bg-actions {
+.brutal-bg-actions,
+.brutal-bg-upload {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 8px;
 	margin: 16px 0;
+}
+
+.brutal-bg-upload {
+	align-items: center;
+}
+
+.brutal-bg-upload input[type="file"] {
+	flex: 1 1 320px;
+	min-width: 0;
+	min-height: 40px;
+	padding: 6px 8px;
+	background: var(--br-paper);
+	color: var(--br-ink);
+	border: var(--br-line) solid var(--br-ink);
+	font-family: var(--br-font-mono);
+	font-size: 12px;
+}
+
+.brutal-bg-upload input[type="file"]::file-selector-button {
+	margin-right: 10px;
+	padding: 7px 12px;
+	background: var(--br-ink);
+	color: var(--br-paper);
+	border: var(--br-line) solid var(--br-ink);
+	font-family: var(--br-font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+.brutal-bg-upload input[type="file"]::file-selector-button:hover {
+	background: var(--br-lime);
+	color: var(--br-ink);
 }
 
 

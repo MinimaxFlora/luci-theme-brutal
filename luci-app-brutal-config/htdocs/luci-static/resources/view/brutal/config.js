@@ -5,6 +5,7 @@
 'require rpc';
 'require uci';
 'require ui';
+'require request';
 
 const TRANSPARENCY = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ];
 const VERSION = '1.3.1';
@@ -397,14 +398,31 @@ return view.extend({
 			]);
 		};
 
-		const uploadBackground = (ev) => {
+		const uploadSelected = () => {
 			if (m.readonly)
 				return Promise.resolve();
 
-			const tmp = '/tmp/brutal_background.tmp';
+			const input = document.getElementById('brutal-bg-file');
+			const file = input && input.files ? input.files[0] : null;
 
-			return ui.uploadFile(tmp, ev.target).then((res) => {
-				return callRename(res.name);
+			if (!file) {
+				ui.addNotification(null, E('p', _('Select a file first.')));
+				return Promise.resolve();
+			}
+
+			const tmp = '/tmp/brutal_background.tmp';
+			const data = new FormData();
+			data.append('sessionid', rpc.getSessionID());
+			data.append('filename', tmp);
+			data.append('filedata', file);
+
+			return request.post(L.env.cgi_base + '/cgi-upload', data, { timeout: 0 }).then((res) => {
+				const reply = res.json();
+
+				if (reply && reply.failure)
+					throw new Error(reply.message || _('Failed to upload the background.'));
+
+				return callRename(file.name);
 			}).then((ret) => {
 				if (ret.result === 0)
 					return location.reload();
@@ -446,12 +464,18 @@ return view.extend({
 				E('h3', _('Background directory (available space: %1024.2mB)').format(data[1].avail)),
 				E('p', { 'class': 'cbi-section-descr' },
 					_('Upload jpg/png/gif/webp/mp4/webm files to %s. The login page picks one at random when the wallpaper setting is "random".').format(BG_DIR)),
-				E('div', { 'class': 'brutal-bg-actions' }, [
+				E('div', { 'class': 'brutal-bg-upload' }, [
+					E('input', {
+						'type': 'file',
+						'id': 'brutal-bg-file',
+						'accept': '.jpg,.jpeg,.png,.gif,.webp,.mp4,.webm',
+						'disabled': m.readonly ? '' : null
+					}),
 					E('button', {
 						'class': 'cbi-button cbi-button-action',
 						'disabled': m.readonly ? '' : null,
-						'click': uploadBackground
-					}, [ _('Upload background…') ])
+						'click': uploadSelected
+					}, [ _('Upload') ])
 				]),
 				tbl
 			]);
