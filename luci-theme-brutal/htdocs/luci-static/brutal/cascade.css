@@ -713,18 +713,26 @@ li.menu {
  * ------------------------------------------------------------------------ */
 
 footer {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: flex-end;
-	text-align: right;
-	align-items: center;
-	gap: var(--br-gap);
-	margin-top: auto;
-	padding: 16px max(var(--br-pad), calc((100% - var(--br-page-max)) / 2 + var(--br-pad)));
+	width: 100%;
+	max-width: 1240px;
+	margin: 0 auto;
+	padding: 16px 24px;
 	background: transparent;
 	color: var(--br-ink);
 	font-size: 11px;
-	letter-spacing: 0.02em;
+}
+
+.footer-content {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	text-align: right;
+}
+
+.footer-sep {
+	color: var(--br-ink);
 }
 
 footer a {
@@ -742,12 +750,6 @@ footer a:focus-visible {
 
 #modemenu {
 	display: none !important;
-}
-
-.footer-mark {
-	margin-left: auto;
-	font-weight: 700;
-	white-space: nowrap;
 }
 
 .breadcrumb {
@@ -1999,16 +2001,13 @@ th[data-sort-direction="desc"]::after {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
+	justify-content: flex-end;
 	gap: var(--br-gap);
 	margin: 0 0 var(--br-section-gap);
-	padding: 16px 20px;
-	background: var(--br-paper);
-	border: var(--br-line) solid var(--br-ink);
-	box-shadow: var(--br-shadow-sm);
-}
-
-.cbi-page-actions {
-	justify-content: flex-end;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
 }
 
 .cbi-page-actions::after {
@@ -3404,7 +3403,6 @@ header {
 	height: 56px;
 	background: var(--br-chrome);
 	color: var(--br-on-chrome);
-	border-bottom: var(--br-line) solid var(--br-ink);
 }
 
 header .fill {
