@@ -324,15 +324,6 @@ a:focus {
 	line-height: 1;
 }
 
-.cbi-map > h2::before {
-	content: "";
-	flex: none;
-	width: 16px;
-	height: 16px;
-	background: var(--br-pink);
-	border: var(--br-line) solid var(--br-ink);
-}
-
 .cbi-map-descr,
 .cbi-section-descr {
 	max-width: 78ch;
@@ -1289,6 +1280,13 @@ a.label:hover {
 	max-width: 100%;
 }
 
+/* A table that hosts a dropdown (scheduled reboot, nlbw, ...) must not be
+ * a scroll/clip container, or the open dropdown gets cut off. */
+.cbi-tblsection:has(.cbi-dropdown),
+.brutal-table-scroll:has(.cbi-dropdown) {
+	overflow: visible;
+}
+
 #cbi-samba4-sambashare {
 	overflow: visible;
 }
@@ -1841,7 +1839,18 @@ input[type="radio"][disabled] {
 	width: 100%;
 	margin: 0 0 var(--br-gap);
 	border-collapse: collapse;
+	border-left: var(--br-line) solid var(--br-ink);
+	border-right: var(--br-line) solid var(--br-ink);
+	border-bottom: var(--br-line) solid var(--br-ink);
 	font-size: 13px;
+}
+
+/* Standalone tables (processes, firewall) get a card treatment. */
+#maincontent .table:not(.cbi-section .table),
+.nft-table .table {
+	background: var(--br-paper);
+	border: var(--br-line) solid var(--br-ink);
+	box-shadow: var(--br-shadow-sm);
 }
 
 .tr {
@@ -2983,11 +2992,6 @@ body.page-blank {
 	.cbi-map > h2 {
 		font-size: 30px;
 		gap: 12px;
-	}
-
-	.cbi-map > h2::before {
-		width: 12px;
-		height: 12px;
 	}
 
 	.cbi-section {
