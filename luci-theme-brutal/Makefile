@@ -14,13 +14,12 @@ PKG_NAME:=luci-theme-brutal
 LUCI_NAME:=luci-theme-brutal
 
 PKG_VERSION:=1.3.1
-PKG_RELEASE:=12
+PKG_RELEASE:=13
 
 PKG_MAINTAINER:=MinimaxFlora <zj18139624826@gmail.com>
 LUCI_MAINTAINER:=MinimaxFlora <zj18139624826@gmail.com>
 LUCI_URL:=https://github.com/MinimaxFlora/luci-theme-brutal
 PKG_LICENSE:=Apache-2.0
-PKG_LICENSE_FILES:=LICENSE
 
 LUCI_TITLE:=Brutal Theme
 LUCI_DESCRIPTION:=Neo-brutalist LuCI theme: 2px ink borders, hard offset \
@@ -69,11 +68,10 @@ case "$$1" in *upgrade*) exit 0 ;; esac
 }
 endef
 
-# luci.mk only stages htdocs/, ucode/ and root/ into PKG_BUILD_DIR, so a
-# PKG_LICENSE_FILES path would otherwise point at a file that is not there.
+# luci.mk only stages htdocs/, ucode/ and root/ into PKG_BUILD_DIR.
+# The repository license lives at the feed root, not in each package.
 # The hook name is keyed on LUCI_NAME, which is pinned above.
 define Build/Prepare/luci-theme-brutal
-	$(CP) $(CURDIR)/LICENSE $(PKG_BUILD_DIR)/
 	# Checkouts on Windows filesystems (DrvFs, NTFS) report every file as
 	# 0777. Normalise the staged tree so the package does not install
 	# world-writable stylesheets, then restore the executable bit where it

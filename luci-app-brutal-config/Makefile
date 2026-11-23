@@ -11,13 +11,12 @@ LUCI_NAME:=luci-app-brutal-config
 LUCI_BASENAME:=brutal-config
 
 PKG_VERSION:=1.3.1
-PKG_RELEASE:=12
+PKG_RELEASE:=13
 
 PKG_MAINTAINER:=MinimaxFlora <zj18139624826@gmail.com>
 LUCI_MAINTAINER:=MinimaxFlora <zj18139624826@gmail.com>
 LUCI_URL:=https://github.com/MinimaxFlora/luci-theme-brutal
 PKG_LICENSE:=Apache-2.0
-PKG_LICENSE_FILES:=LICENSE
 
 # Translation packages have their own version. Without this, luci.mk derives
 # it from git metadata, which the SDK checkout does not have, and produces
@@ -38,7 +37,6 @@ define Package/luci-app-brutal-config/conffiles
 endef
 
 define Build/Prepare/luci-app-brutal-config
-	$(CP) $(CURDIR)/LICENSE $(PKG_BUILD_DIR)/
 	$(FIND) $(PKG_BUILD_DIR) -type d -exec chmod 0755 {} +
 	$(FIND) $(PKG_BUILD_DIR) -type f -exec chmod 0644 {} +
 	$(FIND) $(PKG_BUILD_DIR)/root/etc/uci-defaults -type f -exec chmod 0755 {} +
