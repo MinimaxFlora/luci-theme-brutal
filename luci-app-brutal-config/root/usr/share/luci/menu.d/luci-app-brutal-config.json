@@ -1,0 +1,13 @@
+{
+	"admin/system/brutal": {
+		"title": "Brutal Theme",
+		"order": 90,
+		"action": {
+			"type": "view",
+			"path": "brutal/config"
+		},
+		"depends": {
+			"acl": [ "luci-app-brutal-config" ]
+		}
+	}
+}

@@ -7,16 +7,27 @@
 {% include('header', { blank_page: true }) %}
 
 {%
+	import { cursor } from 'uci';
+
+	const cfg = cursor();
 	const boardinfo = ubus.call('system', 'board');
 	const hostname = striptags(boardinfo?.hostname ?? '?');
 	const firmware = striptags(`${version.distname ?? 'OpenWrt'} ${version.distversion ?? ''}`);
+	const bg_opt = cfg.get_first('brutal', 'login', 'background');
+	const bg_on = (bg_opt == null || bg_opt == '1');
+	const wallpaper = cfg.get_first('brutal', 'login', 'wallpaper') ?? (media + '/img/bg1.webp');
+	const login_title = striptags(cfg.get_first('brutal', 'login', 'title') ?? 'LuCI');
 -%}
 
-<main class="login-page">
+{% if (bg_on): %}
+<div class="login-bg" style="background-image:url('{{ entityencode(wallpaper, true) }}')" aria-hidden="true"></div>
+{% endif %}
+
+<main class="login-page{{ bg_on ? ' has-bg' : '' }}">
 	<div class="login-card">
 		<div class="login-head">
 			<span class="login-stamp" aria-hidden="true">BRUTAL</span>
-			<h1 class="login-title">LuCI</h1>
+			<h1 class="login-title">{{ entityencode(login_title, true) }}</h1>
 			<p class="login-note">{{ hostname }} // ROUTER CONTROL</p>
 		</div>
 

@@ -12,6 +12,7 @@ const MENU_ICONS = {
 	nas: 'nas',
 	network: 'network',
 	vpn: 'vpn',
+	brutal: 'config',
 	logout: 'logout'
 };
 
@@ -100,8 +101,8 @@ return baseclass.extend({
 		if (!container)
 			return;
 
-		while (container.firstChild)
-			container.removeChild(container.firstChild);
+		while (container.querySelector('.sidebar-nav'))
+			container.removeChild(container.querySelector('.sidebar-nav'));
 
 		const ul = E('ul', { 'class': 'sidebar-nav' });
 		const children = ui.menu.getChildren(mode);
@@ -165,7 +166,6 @@ return baseclass.extend({
 			ul.appendChild(li);
 		});
 
-		container.appendChild(E('div', { 'class': 'sidebar-title' }, _('Navigation')));
 		container.appendChild(ul);
 		container.style.display = '';
 	},

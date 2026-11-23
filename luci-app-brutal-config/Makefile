@@ -1,0 +1,39 @@
+#
+# Copyright (C) 2026 MinimaxFlora
+#
+# This is free software, licensed under the Apache License, Version 2.0.
+#
+
+include $(TOPDIR)/rules.mk
+
+PKG_NAME:=luci-app-brutal-config
+LUCI_NAME:=luci-app-brutal-config
+LUCI_BASENAME:=brutal-config
+
+PKG_VERSION:=1.1.0
+PKG_RELEASE:=1
+
+PKG_MAINTAINER:=MinimaxFlora <zj18139624826@gmail.com>
+LUCI_MAINTAINER:=MinimaxFlora <zj18139624826@gmail.com>
+LUCI_URL:=https://github.com/MinimaxFlora/luci-theme-brutal
+PKG_LICENSE:=Apache-2.0
+PKG_LICENSE_FILES:=LICENSE
+
+LUCI_TITLE:=Brutal Theme Settings
+LUCI_DESCRIPTION:=Login wallpaper and wordmark settings for the Brutal LuCI theme.
+LUCI_DEPENDS:=+luci-base +luci-theme-brutal
+LUCI_PKGARCH:=all
+
+define Package/luci-app-brutal-config/conffiles
+/etc/config/brutal
+endef
+
+define Build/Prepare/luci-app-brutal-config
+	$(CP) $(CURDIR)/LICENSE $(PKG_BUILD_DIR)/
+	$(FIND) $(PKG_BUILD_DIR) -type d -exec chmod 0755 {} +
+	$(FIND) $(PKG_BUILD_DIR) -type f -exec chmod 0644 {} +
+endef
+
+include $(TOPDIR)/feeds/luci/luci.mk
+
+# call BuildPackage - OpenWrt buildroot signature

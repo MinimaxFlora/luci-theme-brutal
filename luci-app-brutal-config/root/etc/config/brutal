@@ -1,0 +1,4 @@
+config login 'login'
+	option background '1'
+	option wallpaper '/luci-static/brutal/img/bg1.webp'
+	option title 'LuCI'

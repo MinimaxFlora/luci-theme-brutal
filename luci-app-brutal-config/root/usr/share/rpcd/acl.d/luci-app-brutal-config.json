@@ -1,0 +1,11 @@
+{
+	"luci-app-brutal-config": {
+		"description": "Grant access to Brutal theme settings",
+		"read": {
+			"uci": [ "brutal" ]
+		},
+		"write": {
+			"uci": [ "brutal" ]
+		}
+	}
+}

@@ -83,7 +83,7 @@ case "$1" in *upgrade*) exit 0 ;; esac
 
 并且只在真正卸载时回退 `mediaurlbase`，否则每次升级都会把用户踢回 bootstrap。
 
-`luci.mk` 的版本推导在两条分支上行为一致：有 `.git` 时按提交时间生成 `<yy>.<年内第几天>.<秒>~<sha>`，没有 `.git` 时退回文件 mtime。本仓库在 Makefile 里钉死 `PKG_VERSION:=1.0.0` / `PKG_RELEASE:=1`，避免不同架构的 CI job 生成不同版本号。
+`luci.mk` 的版本推导在两条分支上行为一致：有 `.git` 时按提交时间生成 `<yy>.<年内第几天>.<秒>~<sha>`，没有 `.git` 时退回文件 mtime。本仓库在主题 Makefile 里钉死 `PKG_VERSION:=1.1.0` / `PKG_RELEASE:=3`，配置应用钉死 `1.1.0-r1`，避免不同架构的 CI job 生成不同版本号。
 
 ## 25.12 的额外差异
 

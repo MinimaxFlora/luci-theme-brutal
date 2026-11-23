@@ -95,12 +95,14 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
-      - name: Stage theme package
+      - name: Stage packages
         run: |
           set -euo pipefail
-          rsync -a --delete \
-            --exclude .git --exclude .cache --exclude sdk --exclude dist \
-            "${GITHUB_WORKSPACE}/" sdk/package/luci-theme-brutal/
+          for pkg in luci-theme-brutal luci-app-brutal-config; do
+            rsync -a --delete \
+              --exclude .git --exclude .cache --exclude sdk --exclude dist \
+              "${GITHUB_WORKSPACE}/${pkg}/" "sdk/package/${pkg}/"
+          done
 
       - name: Configure
         working-directory: sdk
@@ -112,15 +114,21 @@ jobs:
           CONFIG_ALL_NONSHARED=n
           CONFIG_AUTOREMOVE=n
           CONFIG_PACKAGE_luci-theme-brutal=m
+          CONFIG_PACKAGE_luci-app-brutal-config=m
+          CONFIG_PACKAGE_luci-i18n-brutal-config-zh-cn=m
           EOF
           sed -i 's/^[[:space:]]*//' .config
           make defconfig
-          grep -qx 'CONFIG_PACKAGE_luci-theme-brutal=m' .config ||
-            { echo "::error::defconfig dropped luci-theme-brutal"; exit 1; }
+          for opt in luci-theme-brutal luci-app-brutal-config luci-i18n-brutal-config-zh-cn; do
+            grep -qx "CONFIG_PACKAGE_${opt}=m" .config ||
+              { echo "::error::defconfig dropped ${opt}"; exit 1; }
+          done
 
       - name: Compile
         working-directory: sdk
-        run: make package/luci-theme-brutal/compile V=s
+        run: |
+          make package/luci-theme-brutal/compile \
+               package/luci-app-brutal-config/compile V=s
 
       - name: Collect and inspect
         env:
@@ -128,28 +136,32 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p dist
-          find sdk/bin/packages -type f -name "luci-theme-brutal*.${FORMAT}" -exec cp -v {} dist/ \;
+          find sdk/bin/packages -type f \
+            \( -name "luci-theme-brutal*.${FORMAT}" \
+               -o -name "luci-app-brutal-config*.${FORMAT}" \
+               -o -name "luci-i18n-brutal-config*.${FORMAT}" \) \
+            -exec cp -v {} dist/ \;
           count="$(find dist -maxdepth 1 -type f -name "*.${FORMAT}" | wc -l)"
-          if [ "${count}" -ne 1 ]; then
-            echo "::error::Expected exactly one .${FORMAT} artifact, found ${count}"
+          if [ "${count}" -ne 3 ]; then
+            echo "::error::Expected three .${FORMAT} artifacts, found ${count}"
             ls -l dist
             exit 1
           fi
-          pkg="$(find dist -maxdepth 1 -type f -name "*.${FORMAT}" | head -n 1)"
-          case "${FORMAT}" in
-            ipk)
-              tar -xzOf "${pkg}" ./control.tar.gz | tar -xzOf - ./control |
-                grep -E '^(Package|Version|Architecture|Depends|Section):'
-              ;;
-            apk)
-              if [ -x sdk/staging_dir/host/bin/apk ]; then
-                sdk/staging_dir/host/bin/apk --allow-untrusted adbdump "${pkg}" |
-                  sed -n '1,40p'
-              else
-                echo "apk host tool not present in this SDK; skipping metadata dump"
-              fi
-              ;;
-          esac
+          for pkg in dist/*.${FORMAT}; do
+            echo "=== ${pkg}"
+            case "${FORMAT}" in
+              ipk)
+                tar -xzOf "${pkg}" ./control.tar.gz | tar -xzOf - ./control |
+                  grep -E '^(Package|Version|Architecture|Depends|Section):'
+                ;;
+              apk)
+                if [ -x sdk/staging_dir/host/bin/apk ]; then
+                  sdk/staging_dir/host/bin/apk --allow-untrusted adbdump "${pkg}" |
+                    sed -n '1,40p'
+                fi
+                ;;
+            esac
+          done
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

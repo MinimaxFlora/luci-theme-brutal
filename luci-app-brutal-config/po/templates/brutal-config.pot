@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-app-brutal-config
+"
+"Report-Msgid-Bugs-To: 
+"
+"PO-Revision-Date: 2026-11-23 12:00+0800
+"
+"Last-Translator: MinimaxFlora <zj18139624826@gmail.com>
+"
+"Language-Team: 
+"
+"MIME-Version: 1.0
+"
+"Content-Type: text/plain; charset=UTF-8
+"
+"Content-Transfer-Encoding: 8bit
+"
+
+msgid "Brutal Theme"
+msgstr ""
+
+msgid ""
+"Login page appearance. The theme ships with working defaults; these options "
+"only override them."
+msgstr ""
+
+msgid "Login page"
+msgstr ""
+
+msgid "Wallpaper"
+msgstr ""
+
+msgid "Show the wallpaper behind the login form."
+msgstr ""
+
+msgid "Wallpaper path or URL"
+msgstr ""
+
+msgid ""
+"A path under /www, for example /luci-static/brutal/img/bg1.webp, or an "
+"https:// URL."
+msgstr ""
+
+msgid "Login title"
+msgstr ""
+
+msgid "Large wordmark on the login card."
+msgstr ""

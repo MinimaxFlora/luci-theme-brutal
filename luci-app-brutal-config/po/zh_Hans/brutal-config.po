@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-app-brutal-config\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-11-23 12:00+0800\n"
+"Last-Translator: MinimaxFlora <zj18139624826@gmail.com>\n"
+"Language-Team: Chinese (Simplified)\n"
+"Language: zh_Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Brutal Theme"
+msgstr "Brutal 主题"
+
+msgid ""
+"Login page appearance. The theme ships with working defaults; these options "
+"only override them."
+msgstr "登录页外观。主题自带可用的默认值，这里的选项仅用于覆盖。"
+
+msgid "Login page"
+msgstr "登录页"
+
+msgid "Wallpaper"
+msgstr "壁纸"
+
+msgid "Show the wallpaper behind the login form."
+msgstr "在登录表单后面显示壁纸。"
+
+msgid "Wallpaper path or URL"
+msgstr "壁纸路径或网址"
+
+msgid ""
+"A path under /www, for example /luci-static/brutal/img/bg1.webp, or an "
+"https:// URL."
+msgstr ""
+"可以是 /www 下的路径（例如 /luci-static/brutal/img/bg1.webp），也可以是 "
+"https:// 网址。"
+
+msgid "Login title"
+msgstr "登录标题"
+
+msgid "Large wordmark on the login card."
+msgstr "登录卡片上的大号标题。"
