@@ -59,8 +59,8 @@
 		<meta name="darkreader-lock">
 		<meta name="robots" content="noindex, nofollow">
 		<meta name="referrer" content="strict-origin-when-cross-origin">
-		<link rel="stylesheet" href="{{ media }}/cascade.css">
-		<link rel="stylesheet" media="only screen and (max-device-width: 854px)" href="{{ media }}/mobile.css" />
+		<link rel="stylesheet" href="{{ media }}/css/cascade.css">
+		<link rel="stylesheet" media="only screen and (max-device-width: 854px)" href="{{ media }}/css/mobile.css" />
 		{% if (has_favicon): %}
 		<link rel="icon" href="{{ media }}/branding/favicon.png?v={{ favicon_mtime }}" sizes="any">
 		{% else %}

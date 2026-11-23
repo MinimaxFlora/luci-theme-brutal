@@ -1256,9 +1256,14 @@ a.label:hover {
 	text-transform: uppercase;
 }
 
-.cbi-value-field {
+.cbi-value-field,
+.cbi-value > output {
 	min-width: 0;
 	max-width: 100%;
+}
+
+.cbi-value > output {
+	grid-column: 2 / -1;
 }
 
 .cbi-value > .cbi-section,
@@ -3300,7 +3305,7 @@ header button:focus-visible,
 @font-face {
 	font-family: "Google Sans";
 	src: local("Google Sans"), local("GoogleSans-Regular"),
-	     url("fonts/GoogleSans-Regular.woff2") format("woff2");
+	     url("../fonts/GoogleSans-Regular.woff2") format("woff2");
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
@@ -3309,7 +3314,7 @@ header button:focus-visible,
 @font-face {
 	font-family: "TypoGraphica";
 	src: local("TypoGraphica"),
-	     url("fonts/TypoGraphica.woff2") format("woff2");
+	     url("../fonts/TypoGraphica.woff2") format("woff2");
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
@@ -3529,8 +3534,8 @@ header .container {
 	width: 18px;
 	height: 18px;
 	background-color: currentColor;
-	-webkit-mask: url("icons/config.svg") center / contain no-repeat;
-	mask: url("icons/config.svg") center / contain no-repeat;
+	-webkit-mask: url("../icons/config.svg") center / contain no-repeat;
+	mask: url("../icons/config.svg") center / contain no-repeat;
 }
 
 #maincontent {
@@ -3842,15 +3847,15 @@ header .container {
 }
 
 .brutal-appearance-icon[data-mode="light"] {
-	--br-appearance-icon: url("icons/sun.svg");
+	--br-appearance-icon: url("../icons/sun.svg");
 }
 
 .brutal-appearance-icon[data-mode="dark"] {
-	--br-appearance-icon: url("icons/moon.svg");
+	--br-appearance-icon: url("../icons/moon.svg");
 }
 
 .brutal-appearance-icon[data-mode="normal"] {
-	--br-appearance-icon: url("icons/monitor.svg");
+	--br-appearance-icon: url("../icons/monitor.svg");
 }
 
 .brutal-appearance-panel {
@@ -3898,8 +3903,8 @@ header .container {
 	height: 16px;
 	margin-left: auto;
 	background-color: currentColor;
-	-webkit-mask: url("icons/check.svg") center / contain no-repeat;
-	mask: url("icons/check.svg") center / contain no-repeat;
+	-webkit-mask: url("../icons/check.svg") center / contain no-repeat;
+	mask: url("../icons/check.svg") center / contain no-repeat;
 	opacity: 0;
 }
 

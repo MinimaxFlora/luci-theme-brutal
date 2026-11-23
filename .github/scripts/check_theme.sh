@@ -100,8 +100,8 @@ grep -q 'method="post"' "$THEME/ucode/template/themes/brutal/sysauth.ut" ||
 	fail "sysauth.ut lost the login form"
 
 for file in \
-	"$THEME/htdocs/luci-static/brutal/cascade.css" \
-	"$THEME/htdocs/luci-static/brutal/mobile.css" \
+	"$THEME/htdocs/luci-static/brutal/css/cascade.css" \
+	"$THEME/htdocs/luci-static/brutal/css/mobile.css" \
 	"$THEME/htdocs/luci-static/brutal/logo.svg" \
 	"$THEME/htdocs/luci-static/brutal/logo_48.png" \
 	"$THEME/htdocs/luci-static/brutal/fonts/GoogleSans-Regular.woff2" \
@@ -185,7 +185,7 @@ import pathlib
 import re
 import sys
 
-css = pathlib.Path("luci-theme-brutal/htdocs/luci-static/brutal/cascade.css").read_text(encoding="utf-8")
+css = pathlib.Path("luci-theme-brutal/htdocs/luci-static/brutal/css/cascade.css").read_text(encoding="utf-8")
 
 errors = []
 
