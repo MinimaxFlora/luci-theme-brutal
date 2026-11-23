@@ -132,4 +132,4 @@ The theme is built on LuCI's Bootstrap base classes and the standard OpenWrt the
 
 Apache License 2.0 — see [LICENSE](LICENSE).
 
-Copyright 2026 MinimaxFlora <zj18139624826@gmail.com>
+Copyright 2026 MinimaxFlora

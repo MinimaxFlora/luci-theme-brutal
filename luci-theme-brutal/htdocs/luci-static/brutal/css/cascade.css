@@ -719,6 +719,7 @@ footer {
 	padding: 16px 24px;
 	background: transparent;
 	color: var(--br-ink);
+	border-top: var(--br-line) solid var(--br-ink);
 	font-size: 11px;
 }
 
@@ -2276,7 +2277,7 @@ body.modal-overlay-active #modal_overlay {
 	padding: var(--br-pad);
 	background: var(--br-paper);
 	color: var(--br-ink);
-	border: var(--br-line-bold) solid var(--br-paper);
+	border: var(--br-line-bold) solid var(--br-ink);
 	box-shadow: 8px 8px 0 0 var(--br-lime);
 }
 
@@ -3393,6 +3394,7 @@ header {
 	height: 56px;
 	background: var(--br-chrome);
 	color: var(--br-on-chrome);
+	border-bottom: var(--br-line) solid var(--br-ink);
 }
 
 header .fill {
