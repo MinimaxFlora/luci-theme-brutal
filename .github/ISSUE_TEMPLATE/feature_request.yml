@@ -1,0 +1,76 @@
+name: Feature request / 功能建议
+description: Suggest an improvement for the Brutal theme
+title: "[Feature] "
+labels: []
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请先描述使用场景，而不是只给一个实现方案。
+        Describe the problem first; implementation details are optional.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: 涉及范围 / Area
+      multiple: true
+      options:
+        - 主题样式与布局 / Theme styling and layout
+        - 侧栏与菜单 / Sidebar and menu
+        - 登录页 / Login page
+        - 主题设置页 / Settings page
+        - 背景与图标 / Backgrounds and branding
+        - 打包与兼容性 / Packaging and compatibility
+        - 文档 / Documentation
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 想解决的问题 / Problem
+      description: 现在哪里不方便，或哪个场景没有覆盖
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 期望的效果 / Proposed solution
+      description: 你希望界面或行为变成什么样
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 其它方案 / Alternatives considered
+    validations:
+      required: false
+
+  - type: input
+    id: reference
+    attributes:
+      label: 参考实现 / Reference
+      description: Argon 或其它主题里的类似功能、截图、链接
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 补充信息 / Additional context
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 确认 / Checklist
+      options:
+        - label: 我已经搜索过已有 Issue 和 Discussions / I searched existing issues
+          required: true
+        - label: 这个功能符合主题的新野兽派风格 / The request fits the neo-brutalist style
+          required: true

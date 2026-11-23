@@ -1,0 +1,129 @@
+name: Bug report / 问题反馈
+description: Report a reproducible problem with the Brutal theme
+title: "[Bug] "
+labels: []
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。提交前请先搜索已有 Issue，并确认问题只出现在 Brutal 主题上：
+        在 **系统 → 系统 → 语言和界面 → 主题** 中切回 Bootstrap，如果问题消失，才属于本主题。
+
+        Thanks for reporting. Please search existing issues first and check whether the
+        problem also happens with the Bootstrap theme.
+
+  - type: input
+    id: firmware
+    attributes:
+      label: 固件与版本 / Firmware and version
+      description: 例如 iStoreOS 25.12.6、OpenWrt 24.10.8、ImmortalWrt 24.10
+      placeholder: iStoreOS 25.12.6
+    validations:
+      required: true
+
+  - type: dropdown
+    id: package-manager
+    attributes:
+      label: 包管理器 / Package manager
+      options:
+        - apk (apk-tools 3, OpenWrt 25.12+)
+        - opkg (OpenWrt 24.10)
+        - 不确定 / Not sure
+    validations:
+      required: true
+
+  - type: input
+    id: theme-version
+    attributes:
+      label: 主题版本 / Theme version
+      description: 设置页顶部显示的版本，或 `apk list -I | grep brutal` / `opkg list-installed | grep brutal`
+      placeholder: 1.3.1-r10
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: 设备与架构 / Device and architecture
+      placeholder: x86_64 / Xiaomi AX3000T (aarch64)
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: 浏览器 / Browser
+      description: 名称与版本，移动端请注明系统
+      placeholder: Chrome 131 / Safari iOS 18
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mode
+    attributes:
+      label: 出现问题的模式 / Theme mode
+      multiple: true
+      options:
+        - 亮色 / Light
+        - 暗色 / Dark
+        - 跟随系统 / Follow system
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 问题描述 / What happened
+      description: 哪个页面、哪个控件、看到了什么
+      placeholder: 系统 → Brutal 主题 → ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤 / Steps to reproduce
+      placeholder: |
+        1. 打开 ...
+        2. 点击 ...
+        3. 看到 ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望行为 / Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志或报错 / Logs
+      description: 浏览器控制台、`logread`、安装命令输出；没有可留空
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 截图 / Screenshots
+      description: 直接拖入图片；请同时说明亮色或暗色
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 确认 / Checklist
+      options:
+        - label: 我已经搜索过已有 Issue / I searched existing issues
+          required: true
+        - label: 切回 Bootstrap 后问题不再出现 / The issue does not occur with Bootstrap
+          required: true
+        - label: 我使用的是本项目 Release 中的包 / I use a package from this repository's Releases
+          required: true

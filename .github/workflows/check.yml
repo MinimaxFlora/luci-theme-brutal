@@ -2,7 +2,7 @@ name: Check theme
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
   workflow_call:
 

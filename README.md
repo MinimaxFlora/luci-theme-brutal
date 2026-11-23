@@ -1,112 +1,97 @@
 # luci-theme-brutal
 
-新野兽派风格的 LuCI 主题：2px 纯黑描边、无模糊的 4/8px 硬阴影、零圆角、等宽正文。
-布局参照 **Argon**：左侧固定导航（黑底品牌块 + 图标菜单）、内容区顶部紧凑 header、移动端抽屉。
-登录页支持 Argon 式「左侧栏 / 居中」两种布局、可调毛玻璃和亮/暗色模式。
-支持 **OpenWrt 24.10（ipk）** 与 **OpenWrt 25.12（apk）**，`PKGARCH=all`。
+**A neo-brutalist LuCI theme for OpenWrt**, with an Argon-style layout and settings page.
 
-![overview](docs/screenshots/overview.png)
+2px ink outlines. Zero-blur hard shadows. Zero rounded corners. Monospace body text.
+Built to feel like a physical interface: every card, button and menu is a solid slab
+that lifts on hover and gets pressed flat on click.
 
-| 状态（Argon 式侧边栏） | 主题设置（luci-app-brutal-config） |
-|---|---|
-| ![overview](docs/screenshots/overview.png) | ![config](docs/screenshots/config.png) |
+[![License](https://img.shields.io/github/license/MinimaxFlora/luci-theme-brutal?style=flat-square)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/MinimaxFlora/luci-theme-brutal?style=flat-square)](https://github.com/MinimaxFlora/luci-theme-brutal/releases)
+[![Downloads](https://img.shields.io/github/downloads/MinimaxFlora/luci-theme-brutal/total?style=flat-square)](https://github.com/MinimaxFlora/luci-theme-brutal/releases)
+[![Issues](https://img.shields.io/badge/Issues-welcome-brightgreen.svg?style=flat-square)](https://github.com/MinimaxFlora/luci-theme-brutal/issues/new)
 
-| 登录（左侧栏 + 毛玻璃） | 系统 | 手机 | 手机抽屉 |
-|---|---|---|---|
-| ![login](docs/screenshots/login.png) | ![system](docs/screenshots/system.png) | ![mobile](docs/screenshots/overview-mobile.png) | ![menu](docs/screenshots/menu-mobile.png) |
+**English** · [简体中文](README_ZH.md)
 
-| 暗色（概览） | 暗色登录（居中 + 毛玻璃） | 右上角主题切换 |
-|---|---|---|---|
-| ![dark](docs/screenshots/dark.png) | ![login-dark](docs/screenshots/login-dark.png) | ![appearance](docs/screenshots/appearance.png) |
+![Brutal overview](docs/screenshots/overview.png)
 
-## 仓库结构
+## Features
 
-本仓库是一个包含两个软件包的 feed：
+- **Neo-brutalist design** — 2px pure-black borders, 4/8/10px hard shadows with no blur, square corners, dotted paper background, one high-saturation accent per role.
+- **Argon-style navigation** — fixed left sidebar with a brand block, icon for every top-level menu and expandable submenus; drawer plus mask on mobile.
+- **Two login layouts** — `classic` (full-height panel on the left edge) and `centered` (card floating in the middle), both with optional frosted glass.
+- **Light / dark / follow system** — switch from the header or from the settings page; the choice also applies to the login page.
+- **Theme settings app** — `luci-app-brutal-config` provides update checks, login-layout previews, accent color, transparency/blur, wallpaper source, favicon and login logo uploads, and a managed background directory.
+- **Background directory** — drop images or videos into `/www/luci-static/brutal/background/`; the login page picks one at random. Built-in wallpaper falls back to `img/bg1.webp`.
+- **Online wallpapers** — Bing, Unsplash and Wallhaven, with an API key field for Unsplash.
+- **Custom branding** — upload a square PNG favicon and a login logo (16–1024 px per side, max 1 MiB); both default to the bundled logo.
+- **Offline assets** — Google Sans and TypoGraphica are shipped in the package; no CDN and no external font requests.
+- **Both package formats** — OpenWrt 24.10 (`opkg` / `.ipk`) and 25.12 (`apk` / apk-tools 3), `PKGARCH=all`.
 
-```
-luci-theme-brutal/          主题：样式、模板、菜单模块、字体、壁纸
-luci-app-brutal-config/     配置应用：登录页壁纸/标题
-```
+## Install
 
-两个包都能单独安装；`luci-app-brutal-config` 依赖主题，反过来不依赖。
+Download the format that matches your firmware from [Releases](https://github.com/MinimaxFlora/luci-theme-brutal/releases).
+The release contains the theme, the settings app and the Simplified Chinese translation.
 
-## 特性
+| Package manager | Theme package | Install |
+| --- | --- | --- |
+| `opkg` | `.ipk` | `opkg install ./luci-theme-brutal_*_all.ipk` |
+| APK v3 (`apk-tools 3.x`) | `.apk` | `apk add --allow-untrusted ./luci-theme-brutal-*.apk` |
 
-- **主题更新检查**：设置页顶部显示当前版本，点「检查更新」直接查 GitHub 最新 Release，并给出「已是最新 / 有新版本」和发布页入口。
-- **在线壁纸**：壁纸来源可选内置、必应、Unsplash、Wallhaven；内置会随机轮换 `background/` 目录里的图片或视频。
-- **右上角主题切换**：header 上的方形按钮打开亮色/暗色/跟随系统菜单，带图标和选中勾，写入 `brutal.global.mode`，不再跳转设置页。
-- **登录页两种布局**：`classic` 把整高面板贴在左边缘（Argon 风格），`centered` 把卡片浮在页面中间；两者都可以开毛玻璃（`backdrop-filter`），模糊半径和不透明度可调，暗色面板可单独设置。
-- **亮色 / 暗色模式**：`normal` 跟随系统，`light` / `dark` 固定；暗色是反相的新野兽派配色（近黑纸面、白色描边、灰色硬阴影），不是简单的反色滤镜。
-- **Argon 式布局**：左侧导航顶部是黑底品牌块，下面是带图标的一级菜单和可展开的二级菜单；内容区顶部有独立的黑色 header（指示器 + 主题设置入口），页面滚动时 header 常驻。移动端侧栏变成抽屉，黑幕遮罩 + `Esc` 关闭。
-- **没有多余的状态条**：header 不再堆主机名、版本号和 `LuCI // BRUTAL` 标签；这些信息在「状态 → 概览」里。
-- **字体随包分发**：`GoogleSans-Regular.woff2`（正文/标题）与 `TypoGraphica.woff2`（品牌和登录大标题）放在 `htdocs/luci-static/brutal/fonts/`，`@font-face` 本地加载，离线路由器可用，不请求任何 CDN。
-- **登录壁纸**：默认使用包内 `img/bg1.webp`，可在「系统 → Brutal 主题」里关闭、换成本地路径或 `https://` 图片，并修改登录卡上的大标题。
-- **纯 CSS 变量驱动**：调色板、间距、阴影集中在 `:root` 的 `--br-*` 变量里，二改只需动一处。
-- **真实的物理反馈**：hover 时阴影从 4px 涨到 10px 并向左上抬起 4px；`:active` 位移 6px、阴影归零。
-- **完整的 LuCI 组件覆盖**：表单、表格、标签页、下拉（含「保存并应用」分裂按钮）、动态列表、弹窗、UCI 差异、文件浏览器、网络接口卡片、独立登录页。
-- **可访问性**：键盘焦点环、跳过导航链接、`prefers-reduced-motion` 降级、移动端 44px 触控目标、`aria-expanded` 菜单状态、登录页 `autocomplete` 提示。
-- CSS 不做 csstidy 压缩（csstidy 会吃掉它不认识的现代声明）。
+Install the matching `luci-app-brutal-config` and `luci-i18n-brutal-config-zh-cn` packages from the same release and in the same format.
 
-## 设计令牌
+Then select **Brutal** under **System → System → Language and Interface → Design**.
 
-| Token | Value | 用途 |
-|---|---|---|
-| `--br-ink` | `#000000` | 所有边框、文字、硬阴影、反色块 |
-| `--br-paper` | `#ffffff` | 画布与卡片 |
-| `--br-slab` | `#f4f4f4` | 次级面板、子菜单底 |
-| `--br-pink` | `#ff006e` | 主强调、错误态、焦点环 |
-| `--br-lime` | `#ccff00` | hover 填充、成功态、选中态 |
-| `--br-cyan` | `#00d9ff` | 当前子菜单、数据强调 |
-| `--br-orange` | `#ff9500` | 警示、保存中指示器 |
-
-阴影只有三档：`4px 4px 0 0 #000`、`8px 8px 0 0 #000`、hover 的 `10px 10px 0 0 #000`。没有圆角，没有渐变（页面底纹的点阵除外），没有半透明色。
-
-字体：标题 `Google Sans` 900（中文回落到 `PingFang SC` / `Microsoft YaHei`），正文与标签等宽栈；品牌与登录大标题用 `TypoGraphica`。
-
-## 安装
-
-### 从 Release 安装
-
-每个 tag 的 Release 会同时提供 24.10 的 ipk 与 25.12 的 apk（主题、配置应用、中文翻译各一个）。
-
-```sh
-# 25.12 / apk（包未签名，需 --allow-untrusted）
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal-1.3.1-r8.apk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config-1.3.1-r8.apk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn-1.3.1-r8.apk
-apk add --allow-untrusted ./luci-theme-brutal-1.3.1-r8.apk \
-  ./luci-app-brutal-config-1.3.1-r8.apk ./luci-i18n-brutal-config-zh-cn-1.3.1-r8.apk
-```
-
-```sh
-# 24.10 / opkg
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal_1.3.1-r8_all.ipk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config_1.3.1-r8_all.ipk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn_v1.3.1_all.ipk
-opkg install ./luci-theme-brutal_1.3.1-r8_all.ipk \
-  ./luci-app-brutal-config_1.3.1-r8_all.ipk ./luci-i18n-brutal-config-zh-cn_v1.3.1_all.ipk
-```
-
-主题的安装脚本会注册 `luci.themes.Brutal`，并在**全新安装**时把 `luci.main.mediaurlbase` 指到 `/luci-static/brutal`；升级不会覆盖你当前选中的主题。装完如果页面没变，清一次缓存并强制刷新：
+If the page still looks like Bootstrap, clear the LuCI caches and force-reload:
 
 ```sh
 rm -rf /tmp/luci-indexcache.* /tmp/luci-modulecache
 ```
 
-### 从源码编译
+> APK v2 cannot read these packages. Keep the package manager that ships with your firmware.
 
-```sh
-cd package
-git clone https://github.com/MinimaxFlora/luci-theme-brutal.git
-cd ..
-make menuconfig   # LuCI -> Themes -> luci-theme-brutal
-                  # LuCI -> Applications -> luci-app-brutal-config
-make package/luci-theme-brutal/compile package/luci-app-brutal-config/compile V=s
-```
+## Customize
 
-产物在 `bin/packages/<arch>/base/`：24.10 是 `.ipk`，25.12 是 `.apk`。
+Open **System → Brutal Theme**, or click the sliders button in the header.
 
-### 装进固件
+| Option | UCI | Default | Notes |
+| --- | --- | --- | --- |
+| Login layout | `brutal.global.login_style` | `classic` | `classic` left panel, `centered` card |
+| Theme mode | `brutal.global.mode` | `normal` | `normal` follows the system; `light` / `dark` fixed |
+| Accent color | `brutal.global.accent` | `#00d9ff` | Any HEX value |
+| Frosted panel | `brutal.global.glass` | `1` | Disable for a solid paper panel |
+| Blur | `brutal.global.blur` | `10` | 0–100 px |
+| Panel opacity | `brutal.global.transparency` | `0.5` | 0–1 |
+| Dark panel | `brutal.global.dark_glass_mode` | `inherit` | `custom` to override the dark values |
+| Dark blur / opacity | `brutal.global.blur_dark` / `transparency_dark` | `10` / `0.5` | Used when `dark_glass_mode=custom` |
+| Wallpaper source | `brutal.global.online_wallpaper` | `none` | `none` local, `bing`, `unsplash`, `wallhaven` |
+| Unsplash key | `brutal.global.use_api_key` | empty | Required for Unsplash |
+
+The settings page also provides:
+
+- **Login layout previews** that update when you switch between classic and centered.
+- **Branding** — favicon and login logo, with “use for both” and reset; stored in `/www/luci-static/brutal/branding/`.
+- **Backgrounds** — upload gif/jpg/png/webp/mp4/webm, list files with size and modification time, delete individually; stored in `/www/luci-static/brutal/background/`.
+- **Save current settings** below the dark panel; the page footer has no duplicate save bar.
+
+The configuration lives in `/etc/config/brutal` as a conffile, so upgrades keep your changes.
+
+## Theme updates
+
+The settings page shows the installed version, checks the latest GitHub release, and links to the release page. Installation stays with the firmware's native package manager; the theme does not run package operations by itself.
+
+## Compatibility
+
+| Release | Format | Package manager | Status |
+| --- | --- | --- | --- |
+| OpenWrt 24.10.x | `.ipk` | `opkg` | SDK build verified |
+| OpenWrt 25.12.x | `.apk` | apk-tools 3 | Installed and exercised on iStoreOS 25.12.6 (x86_64): install, upgrade, settings, light/dark, both login layouts |
+
+The same source tree targets both branches. Details about template variables and package semantics are in [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md).
+
+## Build
+
+As a feed:
 
 ```sh
 echo 'src-git brutal https://github.com/MinimaxFlora/luci-theme-brutal.git' >> feeds.conf.default
@@ -114,127 +99,37 @@ echo 'src-git brutal https://github.com/MinimaxFlora/luci-theme-brutal.git' >> f
 ./scripts/feeds install -a -p brutal
 ```
 
-然后在 `.config` 里 `CONFIG_PACKAGE_luci-theme-brutal=y` 和 `CONFIG_PACKAGE_luci-app-brutal-config=y`。
+Select `CONFIG_PACKAGE_luci-theme-brutal=y` and `CONFIG_PACKAGE_luci-app-brutal-config=y`, then build normally.
+Artifacts land in `bin/packages/<arch>/base/`: `.ipk` on 24.10, `.apk` on 25.12.
 
-## 主题设置
-
-安装 `luci-app-brutal-config` 后，菜单「系统 → Brutal 主题」，或者点 header 右侧的滑杆图标。
-
-| 选项 | UCI | 默认值 | 说明 |
-|---|---|---|---|
-| 登录页布局 | `brutal.global.login_style` | `classic` | `classic` 左侧栏；`centered` 居中卡片 |
-| 主题模式 | `brutal.global.mode` | `normal` | `normal` 跟随系统；`light` / `dark` 固定 |
-| 强调色 | `brutal.global.accent` | `#00d9ff` | 任意 HEX，默认电光青；也可用 `pink` / `lime` / `orange` |
-| 毛玻璃面板 | `brutal.global.glass` | `1` | 关闭后登录卡片恢复纯色纸面 |
-| 模糊半径 | `brutal.global.blur` | `10` | 0–100 px，只在毛玻璃开启时生效 |
-| 面板不透明度 | `brutal.global.transparency` | `0.5` | 0–1，1 表示完全遮住壁纸 |
-| 暗色面板 | `brutal.global.dark_glass_mode` | `inherit` | `inherit` 复用亮色值；`custom` 单独设置 |
-| 暗色模糊 | `brutal.global.blur_dark` | `10` | `dark_glass_mode=custom` 时生效 |
-| 暗色不透明度 | `brutal.global.transparency_dark` | `0.5` | `dark_glass_mode=custom` 时生效 |
-| 壁纸来源 | `brutal.global.online_wallpaper` | `none` | `none` 内置 / `bing` / `unsplash` / `wallhaven` |
-| Unsplash 密钥 | `brutal.global.use_api_key` | 空 | 使用 Unsplash 时必填 |
-
-旧版本的 `brutal.login.*` 仍然兼容；安装 1.3.1 的配置应用时会自动把旧值迁移到 `brutal.global.*`。
-
-登录页不再有单独的标题/壁纸设置块（Argon 也没有）：左侧面板顶部固定显示「Logo + 主机名」，壁纸由「壁纸来源」和背景目录控制。
-
-设置页的保存按钮在「暗色面板」下面（`保存当前设置`），页面底部不再有额外的保存/重置条。
-
-设置页还提供：
-
-- **登录页预览图**：切换 classic / centered 时实时更新布局示意。
-- **品牌资源**：上传 PNG 网站图标（必须正方形）和登录页 Logo，支持「同时用于两处」和一键重置；文件存在 `/www/luci-static/brutal/branding/`。
-- **背景目录**：显示 `/www` 可用空间，上传 gif/jpg/png/webp/mp4/webm，列出文件名/修改时间/大小并单独删除；文件存在 `/www/luci-static/brutal/background/`。
-
-配置文件是 `/etc/config/brutal`，作为 conffile 保存，升级保留你的修改。主题模板每次渲染时用 `uci` 读取它；没装配置应用时按默认值显示壁纸。
-
-## 手动验证
+Static checks (shell, JavaScript, CSS contract, ucode templates):
 
 ```sh
-# 当前主题
-uci get luci.main.mediaurlbase          # /luci-static/brutal
-uci show luci.themes | grep Brutal
-
-# 关键文件
-ls /www/luci-static/brutal/{cascade.css,img/bg1.webp,fonts/GoogleSans-Regular.woff2}
-ls /usr/share/ucode/luci/template/themes/brutal/{header.ut,footer.ut,sysauth.ut}
-ls /usr/share/luci/menu.d/luci-app-brutal-config.json
-
-# 登录页配置
-uci show brutal
-```
-
-## 目录结构
-
-```
-luci-theme-brutal/
-  htdocs/luci-static/brutal/
-    cascade.css                 全部样式（含 @font-face 与 Argon 式布局）
-    mobile.css                  窄屏触控微调
-    fonts/                      GoogleSans-Regular.woff2、TypoGraphica.woff2
-    img/bg1.webp                默认登录壁纸
-    icons/*.svg                 侧栏图标（12 个，CSS mask 着色）
-    logo.svg / logo_48.png
-  htdocs/luci-static/resources/
-    menu-brutal.js              侧栏、标签页、面包屑、移动端抽屉
-  ucode/template/themes/brutal/
-    header.ut / footer.ut / sysauth.ut
-  root/etc/uci-defaults/30_luci-theme-brutal
-
-luci-app-brutal-config/
-  htdocs/luci-static/resources/view/brutal/config.js
-  root/etc/config/brutal
-  root/usr/share/luci/menu.d/luci-app-brutal-config.json
-  root/usr/share/rpcd/acl.d/luci-app-brutal-config.json
-  po/zh_Hans/brutal-config.po
-```
-
-主题名是 `brutal`，因此资源目录、模板目录、`menu-brutal` 模块名三者必须一致；改名要一起改。侧边栏由 `menu-brutal.js` 填进 `#mainmenu`（品牌块保留在 `aside` 里，模块只替换 `.sidebar-nav`），图标按菜单节点名映射（`status`、`system`、`services`、`network`、`nas`、`store`、`vpn`、`quickstart`、`network_guide`、`brutal`、`logout`），未知节点回落到 `default.svg`。
-
-登录页是独立的整页表单（`sysauth.ut`），不依赖 `ui.showModal`：表单直接 POST 到当前 URL，壁纸层是 `position: fixed` 的 `.login-bg`，卡片始终不透明，保证复杂图片上的可读性。
-
-## 开发
-
-```sh
-# 静态检查：shell/JS 语法、主题接线、CSS 契约、模板编译、配置应用接线
 sh .github/scripts/check_theme.sh
-
-# 需要 ucode；没有就指定自编译的二进制
-UCODE_BIN=/path/to/ucode sh .github/scripts/check_theme.sh
 ```
 
-改完后在真机上验证：`scp` 覆盖 `/www/luci-static/brutal/`、`/www/luci-static/resources/menu-brutal.js` 和 `/usr/share/ucode/luci/template/themes/brutal/`，清掉 `/tmp/luci-indexcache.*` 与 `/tmp/luci-modulecache`，然后强制刷新页面。
+## Screenshots
 
-## 兼容性
+| Settings | Login |
+| --- | --- |
+| ![Settings](docs/screenshots/config.png) | ![Login](docs/screenshots/login.png) |
 
-LuCI 的主题解析、24.10 与 25.12 的模板变量差异、ipk/apk 的 postrm 语义都记录在 [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md)。
+| Dark overview | Dark login | Header switch |
+| --- | --- | --- |
+| ![Dark](docs/screenshots/dark.png) | ![Dark login](docs/screenshots/login-dark.png) | ![Appearance](docs/screenshots/appearance.png) |
 
-| 发行版 | 包格式 | 包管理器 | 状态 |
-|---|---|---|---|
-| OpenWrt 24.10.x | `.ipk` | opkg | SDK 构建验证 |
-| OpenWrt 25.12.x | `.apk` | apk-tools 3 | iStoreOS 25.12.6 (x86_64) 实机安装/升级/设置页/亮暗色/双布局验证 |
+## Credits
 
-菜单模块填的是 `#mainmenu`（侧边栏）而不是 bootstrap 的 `#topmenu`，标签页仍在 `#tabmenu`，页脚面包屑仍在 `#modemenu`。
+Brutal borrows heavily from **[luci-theme-argon](https://github.com/jerrykuku/luci-theme-argon)** by
+[jerrykuku](https://github.com/jerrykuku): the sidebar structure, the settings page layout,
+the two login layouts, the wallpaper directory and the branding workflow are all modelled on it.
+The bundled **Google Sans** and **TypoGraphica** webfonts also come from Argon's
+`htdocs/luci-static/argon/fonts/`; check the font licenses before commercial redistribution.
 
-主题只使用 LuCI 24.10 起就存在的模板变量（`dispatched`、`media`、`version`、`blank_page`、`node.css`、`ctx.path`、`ctx.request_path`），两条分支共用同一份源码。登录页用 `import { cursor } from 'uci'` 读配置，这个模块在两条分支的模板运行环境里都有。
+The theme is built on LuCI's Bootstrap base classes and the standard OpenWrt theme API.
 
-## 字体与壁纸
+## License
 
-- `GoogleSans-Regular.woff2`、`TypoGraphica.woff2` 取自 [luci-theme-argon](https://github.com/jerrykuku/luci-theme-argon) 的 `htdocs/luci-static/argon/fonts/`，按该仓库的分发方式随主题一起打包；商用或再分发前请自行确认字体授权。
-- `img/bg1.webp` 由用户提供的图片转换而来（WebP，质量 82），仅作为默认登录壁纸。
+Apache License 2.0 — see [LICENSE](LICENSE).
 
-## 许可
-
-Apache License 2.0，见 [LICENSE](LICENSE)。
-
----
-
-## English
-
-A neo-brutalist LuCI theme with an Argon-style layout: a fixed sidebar with a brand block and icon menu, a compact top header, and a drawer on mobile.
-2px ink borders, zero-blur hard shadows, zero border radius, monospace body text.
-Ships Google Sans and TypoGraphica locally (no CDN), plus a login wallpaper and a separate `luci-app-brutal-config` settings app.
-The settings page includes update checking, login-layout previews, a HEX accent picker, online wallpaper sources, branding uploads and a managed background directory.
-The login page supports a classic side panel or a centered card, an optional frosted panel (blur + opacity), and light/dark modes.
-Works on OpenWrt 24.10 (ipk/opkg) and 25.12 (apk/apk-tools 3), architecture-independent (`PKGARCH=all`).
-Licensed under Apache-2.0.
+Copyright 2026 MinimaxFlora <zj18139624826@gmail.com>

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 安装与使用文档 / Documentation
+    url: https://github.com/MinimaxFlora/luci-theme-brutal#readme
+    about: 先看 README 的安装、主题设置和兼容性说明
+  - name: 最新发行 / Latest release
+    url: https://github.com/MinimaxFlora/luci-theme-brutal/releases
+    about: 下载 ipk / apk，查看每个版本的变更
+  - name: Argon 上游 / Argon upstream
+    url: https://github.com/jerrykuku/luci-theme-argon/issues
+    about: 只涉及 Argon 本身的问题请反馈给上游

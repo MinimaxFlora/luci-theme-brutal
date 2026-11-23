@@ -1362,6 +1362,11 @@ select,
 	transition: box-shadow var(--br-ease), background-color var(--br-ease);
 }
 
+/* The repository public key box needs room to paste a full PEM block. */
+#key-input {
+	min-height: 280px !important;
+}
+
 input[type="file"] {
 	padding: 6px;
 	background: var(--br-slab);
