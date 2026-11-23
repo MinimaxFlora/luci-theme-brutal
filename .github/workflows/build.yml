@@ -189,6 +189,8 @@ jobs:
         run: |
           set -euo pipefail
           ls -l dist
+          # Re-running a tag workflow must not fail on an existing release.
+          gh release delete "${GITHUB_REF_NAME}" --yes --cleanup-tag=false 2>/dev/null || true
           gh release create "${GITHUB_REF_NAME}" dist/* \
             --repo "${GITHUB_REPOSITORY}" \
             --title "${GITHUB_REF_NAME}" \
