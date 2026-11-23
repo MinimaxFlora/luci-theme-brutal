@@ -2,6 +2,7 @@
 
 新野兽派风格的 LuCI 主题：2px 纯黑描边、无模糊的 4/8px 硬阴影、零圆角、等宽正文。
 布局参照 **Argon**：左侧固定导航（黑底品牌块 + 图标菜单）、内容区顶部紧凑 header、移动端抽屉。
+登录页支持 Argon 式「左侧栏 / 居中」两种布局、可调毛玻璃和亮/暗色模式。
 支持 **OpenWrt 24.10（ipk）** 与 **OpenWrt 25.12（apk）**，`PKGARCH=all`。
 
 ![overview](docs/screenshots/overview.png)
@@ -10,9 +11,13 @@
 |---|---|
 | ![overview](docs/screenshots/overview.png) | ![config](docs/screenshots/config.png) |
 
-| 登录（壁纸） | 系统 | 手机 | 手机抽屉 |
+| 登录（左侧栏 + 毛玻璃） | 系统 | 手机 | 手机抽屉 |
 |---|---|---|---|
 | ![login](docs/screenshots/login.png) | ![system](docs/screenshots/system.png) | ![mobile](docs/screenshots/overview-mobile.png) | ![menu](docs/screenshots/menu-mobile.png) |
+
+| 暗色（概览） | 暗色登录（居中 + 毛玻璃） |
+|---|---|
+| ![dark](docs/screenshots/dark.png) | ![login-dark](docs/screenshots/login-dark.png) |
 
 ## 仓库结构
 
@@ -27,6 +32,8 @@ luci-app-brutal-config/     配置应用：登录页壁纸/标题
 
 ## 特性
 
+- **登录页两种布局**：`classic` 把整高面板贴在左边缘（Argon 风格），`centered` 把卡片浮在页面中间；两者都可以开毛玻璃（`backdrop-filter`），模糊半径和不透明度可调，暗色面板可单独设置。
+- **亮色 / 暗色模式**：`normal` 跟随系统，`light` / `dark` 固定；暗色是反相的新野兽派配色（近黑纸面、白色描边、灰色硬阴影），不是简单的反色滤镜。
 - **Argon 式布局**：左侧导航顶部是黑底品牌块，下面是带图标的一级菜单和可展开的二级菜单；内容区顶部有独立的黑色 header（指示器 + 主题设置入口），页面滚动时 header 常驻。移动端侧栏变成抽屉，黑幕遮罩 + `Esc` 关闭。
 - **没有多余的状态条**：header 不再堆主机名、版本号和 `LuCI // BRUTAL` 标签；这些信息在「状态 → 概览」里。
 - **字体随包分发**：`GoogleSans-Regular.woff2`（正文/标题）与 `TypoGraphica.woff2`（品牌和登录大标题）放在 `htdocs/luci-static/brutal/fonts/`，`@font-face` 本地加载，离线路由器可用，不请求任何 CDN。
@@ -61,20 +68,20 @@ luci-app-brutal-config/     配置应用：登录页壁纸/标题
 
 ```sh
 # 25.12 / apk（包未签名，需 --allow-untrusted）
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal-1.1.0-r3.apk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config-1.1.0-r1.apk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn-1.1.0-r1.apk
-apk add --allow-untrusted ./luci-theme-brutal-1.1.0-r3.apk \
-  ./luci-app-brutal-config-1.1.0-r1.apk ./luci-i18n-brutal-config-zh-cn-1.1.0-r1.apk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal-1.2.0-r2.apk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config-1.2.0-r1.apk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn-1.2.0-r1.apk
+apk add --allow-untrusted ./luci-theme-brutal-1.2.0-r2.apk \
+  ./luci-app-brutal-config-1.2.0-r1.apk ./luci-i18n-brutal-config-zh-cn-1.2.0-r1.apk
 ```
 
 ```sh
 # 24.10 / opkg
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal_1.1.0-r3_all.ipk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config_1.1.0-r1_all.ipk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn_v1.1.0_all.ipk
-opkg install ./luci-theme-brutal_1.1.0-r3_all.ipk \
-  ./luci-app-brutal-config_1.1.0-r1_all.ipk ./luci-i18n-brutal-config-zh-cn_v1.1.0_all.ipk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal_1.2.0-r2_all.ipk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config_1.2.0-r1_all.ipk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn_v1.2.0_all.ipk
+opkg install ./luci-theme-brutal_1.2.0-r2_all.ipk \
+  ./luci-app-brutal-config_1.2.0-r1_all.ipk ./luci-i18n-brutal-config-zh-cn_v1.2.0_all.ipk
 ```
 
 主题的安装脚本会注册 `luci.themes.Brutal`，并在**全新安装**时把 `luci.main.mediaurlbase` 指到 `/luci-static/brutal`；升级不会覆盖你当前选中的主题。装完如果页面没变，清一次缓存并强制刷新：
@@ -112,9 +119,20 @@ echo 'src-git brutal https://github.com/MinimaxFlora/luci-theme-brutal.git' >> f
 
 | 选项 | UCI | 默认值 | 说明 |
 |---|---|---|---|
-| 壁纸 | `brutal.login.background` | `1` | 关闭后登录页回到点阵纸底 |
-| 壁纸路径或网址 | `brutal.login.wallpaper` | `/luci-static/brutal/img/bg1.webp` | `/www` 下的路径或 `https://` URL |
-| 登录标题 | `brutal.login.title` | `LuCI` | 登录卡片上的大标题，`TypoGraphica` 渲染 |
+| 登录页布局 | `brutal.global.login_style` | `classic` | `classic` 左侧栏；`centered` 居中卡片 |
+| 主题模式 | `brutal.global.mode` | `normal` | `normal` 跟随系统；`light` / `dark` 固定 |
+| 强调色 | `brutal.global.accent` | `cyan` | `cyan` / `pink` / `lime` / `orange`，用于当前二级菜单 |
+| 毛玻璃面板 | `brutal.global.glass` | `1` | 关闭后登录卡片恢复纯色纸面 |
+| 模糊半径 | `brutal.global.blur` | `10` | 0–100 px，只在毛玻璃开启时生效 |
+| 面板不透明度 | `brutal.global.transparency` | `0.5` | 0–1，1 表示完全遮住壁纸 |
+| 暗色面板 | `brutal.global.dark_glass_mode` | `inherit` | `inherit` 复用亮色值；`custom` 单独设置 |
+| 暗色模糊 | `brutal.global.blur_dark` | `10` | `dark_glass_mode=custom` 时生效 |
+| 暗色不透明度 | `brutal.global.transparency_dark` | `0.5` | `dark_glass_mode=custom` 时生效 |
+| 壁纸 | `brutal.global.background` | `1` | 关闭后登录页回到点阵纸底 |
+| 壁纸路径或网址 | `brutal.global.wallpaper` | `/luci-static/brutal/img/bg1.webp` | `/www` 下的路径或 `https://` URL |
+| 登录标题 | `brutal.global.title` | `LuCI` | 登录卡片上的大标题，`TypoGraphica` 渲染 |
+
+旧版本的 `brutal.login.*` 仍然兼容；安装 1.2.0 的配置应用时会自动把旧值迁移到 `brutal.global.*`。
 
 配置文件是 `/etc/config/brutal`，作为 conffile 保存，升级保留你的修改。主题模板每次渲染时用 `uci` 读取它；没装配置应用时按默认值显示壁纸。
 
@@ -182,7 +200,7 @@ LuCI 的主题解析、24.10 与 25.12 的模板变量差异、ipk/apk 的 postr
 | 发行版 | 包格式 | 包管理器 | 状态 |
 |---|---|---|---|
 | OpenWrt 24.10.x | `.ipk` | opkg | SDK 构建验证 |
-| OpenWrt 25.12.x | `.apk` | apk-tools 3 | iStoreOS 25.12.6 (x86_64) 实机安装/升级/设置页验证 |
+| OpenWrt 25.12.x | `.apk` | apk-tools 3 | iStoreOS 25.12.6 (x86_64) 实机安装/升级/设置页/亮暗色/双布局验证 |
 
 菜单模块填的是 `#mainmenu`（侧边栏）而不是 bootstrap 的 `#topmenu`，标签页仍在 `#tabmenu`，页脚面包屑仍在 `#modemenu`。
 
@@ -204,5 +222,6 @@ Apache License 2.0，见 [LICENSE](LICENSE)。
 A neo-brutalist LuCI theme with an Argon-style layout: a fixed sidebar with a brand block and icon menu, a compact top header, and a drawer on mobile.
 2px ink borders, zero-blur hard shadows, zero border radius, monospace body text.
 Ships Google Sans and TypoGraphica locally (no CDN), plus a login wallpaper and a separate `luci-app-brutal-config` settings app.
+The login page supports a classic side panel or a centered card, an optional frosted panel (blur + opacity), and light/dark modes.
 Works on OpenWrt 24.10 (ipk/opkg) and 25.12 (apk/apk-tools 3), architecture-independent (`PKGARCH=all`).
 Licensed under Apache-2.0.

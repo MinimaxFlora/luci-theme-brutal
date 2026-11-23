@@ -28,7 +28,7 @@ trap 'rm -rf "$tmpdir"' EXIT HUP INT TERM
 
 say "shell and JavaScript syntax"
 
-for script in "$THEME"/root/etc/uci-defaults/*; do
+for script in "$THEME"/root/etc/uci-defaults/* "$APP"/root/etc/uci-defaults/*; do
 	[ -f "$script" ] || continue
 	sh -n "$script" || fail "shell syntax error in $script"
 done
@@ -65,8 +65,17 @@ grep -q 'class="login-page' "$THEME/ucode/template/themes/brutal/sysauth.ut" ||
 grep -q 'class="login-bg"' "$THEME/ucode/template/themes/brutal/sysauth.ut" ||
 	fail "sysauth.ut does not render the wallpaper layer"
 
-grep -q "get_first('brutal', 'login', 'background')" "$THEME/ucode/template/themes/brutal/sysauth.ut" ||
+grep -q "get_first('brutal', 'global'" "$THEME/ucode/template/themes/brutal/sysauth.ut" ||
 	fail "sysauth.ut does not read /etc/config/brutal"
+
+grep -q 'data-style="{{ login_style }}"' "$THEME/ucode/template/themes/brutal/sysauth.ut" ||
+	fail "sysauth.ut does not expose the login layout"
+
+grep -q 'data-glass=' "$THEME/ucode/template/themes/brutal/sysauth.ut" ||
+	fail "sysauth.ut does not expose the glass setting"
+
+grep -q 'data-brutal-mode' "$THEME/ucode/template/themes/brutal/header.ut" ||
+	fail "header.ut does not set the colour mode"
 
 grep -q 'name="luci_password"' "$THEME/ucode/template/themes/brutal/sysauth.ut" ||
 	fail "sysauth.ut lost the password field"
@@ -104,13 +113,20 @@ for file in \
 	"$APP/root/usr/share/luci/menu.d/luci-app-brutal-config.json" \
 	"$APP/root/usr/share/rpcd/acl.d/luci-app-brutal-config.json" \
 	"$APP/htdocs/luci-static/resources/view/brutal/config.js" \
-	"$APP/po/zh_Hans/brutal-config.po"
+	"$APP/po/zh_Hans/brutal-config.po" \
+	"$APP/root/etc/uci-defaults/40_luci-app-brutal-config"
 do
 	[ -s "$file" ] || fail "missing or empty: $file"
 done
 
-grep -q "config login 'login'" "$APP/root/etc/config/brutal" ||
-	fail "/etc/config/brutal lost its login section"
+grep -q "config global 'global'" "$APP/root/etc/config/brutal" ||
+	fail "/etc/config/brutal lost its global section"
+
+grep -q 'option login_style' "$APP/root/etc/config/brutal" ||
+	fail "/etc/config/brutal lost login_style"
+
+[ -s "$APP/root/etc/uci-defaults/40_luci-app-brutal-config" ] ||
+	fail "missing the config migration script"
 
 grep -q '"path": "brutal/config"' "$APP/root/usr/share/luci/menu.d/luci-app-brutal-config.json" ||
 	fail "menu entry does not point at the brutal/config view"
@@ -177,6 +193,7 @@ contract = [
     ".alert-message", ".ifacebox", ".modal", "#modal_overlay",
     ".tabs", ".spinning", "[data-tab-title]",
     ".main-left", ".sidenav-header", ".showSide", ".darkMask",
+    '[data-brutal-mode="dark"]', '[data-style="classic"]', '[data-glass="1"]',
 ]
 for selector in contract:
     if selector not in css:

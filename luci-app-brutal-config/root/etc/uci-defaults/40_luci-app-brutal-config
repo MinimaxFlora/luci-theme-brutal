@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# Copyright 2026 MinimaxFlora <zj18139624826@gmail.com>
+#
+# Licensed to the public under the Apache License 2.0.
+#
+# The first release stored settings in config section "login"; newer versions
+# use "global" for everything. Copy legacy values once and fill in defaults.
+
+[ -n "$IPKG_INSTROOT" ] && exit 0
+
+uci -q get brutal.global >/dev/null 2>&1 || uci set brutal.global=global
+
+for key in background wallpaper title; do
+	legacy="$(uci -q get brutal.login.$key)"
+	[ -n "$legacy" ] && [ -z "$(uci -q get brutal.global.$key)" ] &&
+		uci set brutal.global.$key="$legacy"
+done
+
+set_default() {
+	uci -q get "brutal.global.$1" >/dev/null 2>&1 || uci set "brutal.global.$1=$2"
+}
+
+set_default login_style classic
+set_default mode normal
+set_default accent cyan
+set_default glass 1
+set_default blur 10
+set_default transparency 0.5
+set_default dark_glass_mode inherit
+set_default blur_dark 10
+set_default transparency_dark 0.5
+set_default background 1
+set_default wallpaper /luci-static/brutal/img/bg1.webp
+set_default title LuCI
+
+uci commit brutal
+exit 0

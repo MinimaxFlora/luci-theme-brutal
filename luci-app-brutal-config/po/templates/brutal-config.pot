@@ -1,28 +1,113 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: luci-app-brutal-config
-"
-"Report-Msgid-Bugs-To: 
-"
-"PO-Revision-Date: 2026-11-23 12:00+0800
-"
-"Last-Translator: MinimaxFlora <zj18139624826@gmail.com>
-"
-"Language-Team: 
-"
-"MIME-Version: 1.0
-"
-"Content-Type: text/plain; charset=UTF-8
-"
-"Content-Transfer-Encoding: 8bit
-"
+"Project-Id-Version: luci-app-brutal-config\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-11-23 13:20+0800\n"
+"Last-Translator: MinimaxFlora <zj18139624826@gmail.com>\n"
+"Language-Team: Chinese (Simplified)\n"
+"Language: zh_Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Brutal Theme"
 msgstr ""
 
 msgid ""
-"Login page appearance. The theme ships with working defaults; these options "
-"only override them."
+"The theme keeps the neo-brutalist frame: ink borders, hard shadows and square "
+"corners. These options change the layout, the colour mode and the login panel "
+"material."
+msgstr ""
+
+msgid "Theme settings"
+msgstr ""
+
+msgid "Login page style"
+msgstr ""
+
+msgid ""
+"Classic puts a full-height panel on the left edge; centered floats the card "
+"in the middle."
+msgstr ""
+
+msgid "Classic sidebar"
+msgstr ""
+
+msgid "Centered card"
+msgstr ""
+
+msgid "Theme mode"
+msgstr ""
+
+msgid "Follow the operating system, or pin light/dark for this router."
+msgstr ""
+
+msgid "Follow system"
+msgstr ""
+
+msgid "Light mode"
+msgstr ""
+
+msgid "Dark mode"
+msgstr ""
+
+msgid "Accent colour"
+msgstr ""
+
+msgid ""
+"Used for the current submenu entry. All four accents come from the design "
+"brief."
+msgstr ""
+
+msgid "Electric cyan"
+msgstr ""
+
+msgid "Hot pink"
+msgstr ""
+
+msgid "Acid lime"
+msgstr ""
+
+msgid "Tangerine"
+msgstr ""
+
+msgid "Frosted glass panel"
+msgstr ""
+
+msgid ""
+"Blur the wallpaper behind the login card or panel. The hard border and shadow "
+"stay."
+msgstr ""
+
+msgid "Blur radius (px)"
+msgstr ""
+
+msgid "0 is sharp, 10 is the default frosted preset, 100 is very soft."
+msgstr ""
+
+msgid "Panel opacity"
+msgstr ""
+
+msgid "0 is only blur, 1 hides the wallpaper completely behind the panel."
+msgstr ""
+
+msgid "Dark mode panel"
+msgstr ""
+
+msgid "Reuse the light values, or give the dark panel its own blur and opacity."
+msgstr ""
+
+msgid "Follow light mode"
+msgstr ""
+
+msgid "Custom"
+msgstr ""
+
+msgid "[Dark mode] Blur radius (px)"
+msgstr ""
+
+msgid "[Dark mode] Panel opacity"
 msgstr ""
 
 msgid "Login page"

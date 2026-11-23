@@ -5,7 +5,8 @@
  * Licensed to the public under the Apache License 2.0.
  *
  * Neo-brutalism: 2px ink borders, hard offset shadows, zero border radius.
- * Light only by design - color-scheme is pinned so native controls stay light.
+ * Light is the primary mode; a dark palette and an optional frosted login
+ * panel are available from the theme settings page.
  */
 
 :root {
@@ -22,13 +23,19 @@
 	--br-pink-soft: #ffd6e6;
 	--br-orange-soft: #ffe4c2;
 	--br-dot: #e3e3e3;
+	--br-chrome: #000000;
+	--br-on-chrome: #ffffff;
+	--br-shadow-color: var(--br-ink);
+	--br-accent: var(--br-cyan);
+	--br-glass-alpha: 50%;
+	--br-blur: 10px;
 
 	/* Structure */
 	--br-line: 2px;
 	--br-line-bold: 3px;
-	--br-shadow-sm: 4px 4px 0 0 var(--br-ink);
-	--br-shadow-lg: 8px 8px 0 0 var(--br-ink);
-	--br-shadow-hover: 10px 10px 0 0 var(--br-ink);
+	--br-shadow-sm: 4px 4px 0 0 var(--br-shadow-color);
+	--br-shadow-lg: 8px 8px 0 0 var(--br-shadow-color);
+	--br-shadow-hover: 10px 10px 0 0 var(--br-shadow-color);
 
 	/* Type */
 	--br-font-sans: "Google Sans", Inter, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -45,6 +52,54 @@
 	--br-ease: 150ms ease-out;
 
 	color-scheme: light;
+}
+
+/* Dark palette. "normal" follows the operating system, "light" and "dark"
+ * pin the mode from /etc/config/brutal. */
+:root {
+	--br-dark-ink: #f2f2f2;
+	--br-dark-paper: #0b0b0b;
+	--br-dark-slab: #171717;
+	--br-dark-dot: #2c2c2c;
+	--br-dark-lime-soft: #2e3a00;
+	--br-dark-cyan-soft: #00303a;
+	--br-dark-pink-soft: #3a0020;
+	--br-dark-orange-soft: #3a2600;
+	--br-dark-shadow: #3f3f3f;
+}
+
+:root[data-brutal-mode="normal"] {
+	color-scheme: light dark;
+}
+
+:root[data-brutal-mode="dark"] {
+	color-scheme: dark;
+	--br-ink: var(--br-dark-ink);
+	--br-paper: var(--br-dark-paper);
+	--br-slab: var(--br-dark-slab);
+	--br-dot: var(--br-dark-dot);
+	--br-lime-soft: var(--br-dark-lime-soft);
+	--br-cyan-soft: var(--br-dark-cyan-soft);
+	--br-pink-soft: var(--br-dark-pink-soft);
+	--br-orange-soft: var(--br-dark-orange-soft);
+	--br-shadow-color: var(--br-dark-shadow);
+	--br-chrome: #000000;
+	--br-on-chrome: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root[data-brutal-mode="normal"] {
+		color-scheme: dark;
+		--br-ink: var(--br-dark-ink);
+		--br-paper: var(--br-dark-paper);
+		--br-slab: var(--br-dark-slab);
+		--br-dot: var(--br-dark-dot);
+		--br-lime-soft: var(--br-dark-lime-soft);
+		--br-cyan-soft: var(--br-dark-cyan-soft);
+		--br-pink-soft: var(--br-dark-pink-soft);
+		--br-orange-soft: var(--br-dark-orange-soft);
+		--br-shadow-color: var(--br-dark-shadow);
+	}
 }
 
 /* ---------------------------------------------------------------------------
@@ -662,8 +717,8 @@ footer {
 	gap: var(--br-gap);
 	margin-top: auto;
 	padding: 16px max(var(--br-pad), calc((100% - var(--br-page-max)) / 2 + var(--br-pad)));
-	background: var(--br-ink);
-	color: var(--br-paper);
+	background: var(--br-chrome);
+	color: var(--br-on-chrome);
 	font-size: 11px;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
@@ -2298,6 +2353,53 @@ body.page-blank {
 	box-shadow: 8px 8px 0 0 var(--br-lime);
 }
 
+/* Optional frosted panel: the tint and blur come from the theme settings.
+ * The thick border and the hard shadow stay, so it still reads as a slab. */
+.login-page[data-glass="1"] .login-card {
+	background-color: color-mix(in srgb, var(--br-paper) var(--br-glass-alpha), transparent);
+	-webkit-backdrop-filter: blur(var(--br-blur));
+	backdrop-filter: blur(var(--br-blur));
+}
+
+/* Classic layout: full-height panel attached to the left edge, Argon style. */
+.login-page[data-style="classic"] {
+	display: block;
+	padding: 0;
+	/* place-items from the grid layout also centres block children in
+	 * modern engines; reset both axes so the panel sticks to the edge. */
+	place-items: start;
+	justify-items: start;
+	align-items: start;
+}
+
+.login-page[data-style="classic"] .login-card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: min(440px, 100%);
+	max-width: none;
+	min-height: 100vh;
+	margin: 0;
+	padding: 48px 32px;
+	border-top: 0;
+	border-right: var(--br-line-bold) solid var(--br-ink);
+	border-bottom: 0;
+	border-left: 0;
+	box-shadow: 8px 0 0 0 var(--br-shadow-color);
+}
+
+.login-page[data-style="classic"] .login-title {
+	font-size: 56px;
+}
+
+@media (max-width: 600px) {
+	.login-page[data-style="classic"] .login-card {
+		width: 100%;
+		border-right: 0;
+		box-shadow: none;
+	}
+}
+
 .login-head {
 	margin: 0 0 24px;
 	padding: 0 0 24px;
@@ -3111,15 +3213,16 @@ header button:focus-visible,
 
 .sidenav-header {
 	padding: 20px 16px;
-	background: var(--br-ink);
-	color: var(--br-paper);
+	background: var(--br-chrome);
+	color: var(--br-on-chrome);
+	border-bottom: var(--br-line-bold) solid var(--br-ink);
 }
 
 .sidenav-header .brand {
 	display: flex;
 	align-items: center;
 	gap: 12px;
-	color: var(--br-paper);
+	color: var(--br-on-chrome);
 	text-decoration: none;
 	font-family: var(--br-font-display);
 	font-size: 26px;
@@ -3168,8 +3271,9 @@ header {
 	z-index: 800;
 	flex: none;
 	height: 56px;
-	background: var(--br-ink);
-	color: var(--br-paper);
+	background: var(--br-chrome);
+	color: var(--br-on-chrome);
+	border-bottom: var(--br-line) solid var(--br-ink);
 }
 
 header .fill {
@@ -3197,8 +3301,8 @@ header .container {
 	height: 40px;
 	padding: 0;
 	background: transparent;
-	color: var(--br-paper);
-	border: var(--br-line) solid var(--br-paper);
+	color: var(--br-on-chrome);
+	border: var(--br-line) solid var(--br-on-chrome);
 	cursor: pointer;
 }
 
@@ -3212,7 +3316,7 @@ header .container {
 .header-brand {
 	display: none;
 	max-width: 40vw;
-	color: var(--br-paper);
+	color: var(--br-on-chrome);
 	font-family: var(--br-font-display);
 	font-size: 22px;
 	line-height: 1.1;
@@ -3275,8 +3379,8 @@ header .container {
 	justify-content: center;
 	width: 36px;
 	height: 36px;
-	color: var(--br-paper);
-	border: var(--br-line) solid var(--br-paper);
+	color: var(--br-on-chrome);
+	border: var(--br-line) solid var(--br-on-chrome);
 	text-decoration: none;
 }
 
@@ -3422,7 +3526,7 @@ header .container {
 }
 
 .sidebar-sub li.active > a {
-	background: var(--br-cyan);
+	background: var(--br-accent);
 	color: var(--br-ink);
 	font-weight: 700;
 }
@@ -3454,6 +3558,10 @@ header .container {
 
 .login-page.has-bg .login-card {
 	box-shadow: 8px 8px 0 0 var(--br-ink), 0 0 0 6px var(--br-paper);
+}
+
+.login-page.has-bg[data-style="classic"] .login-card {
+	box-shadow: 8px 0 0 0 var(--br-shadow-color);
 }
 
 /* ---------------------------------------------------------------------------

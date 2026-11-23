@@ -10,20 +10,34 @@
 	import { cursor } from 'uci';
 
 	const cfg = cursor();
+	const cfgval = function(key, fallback) {
+		return cfg.get_first('brutal', 'global', key) ??
+		       cfg.get_first('brutal', 'login', key) ?? fallback;
+	};
 	const boardinfo = ubus.call('system', 'board');
 	const hostname = striptags(boardinfo?.hostname ?? '?');
 	const firmware = striptags(`${version.distname ?? 'OpenWrt'} ${version.distversion ?? ''}`);
-	const bg_opt = cfg.get_first('brutal', 'login', 'background');
-	const bg_on = (bg_opt == null || bg_opt == '1');
-	const wallpaper = cfg.get_first('brutal', 'login', 'wallpaper') ?? (media + '/img/bg1.webp');
-	const login_title = striptags(cfg.get_first('brutal', 'login', 'title') ?? 'LuCI');
+	const bg_on = cfgval('background', '1') != '0';
+	const wallpaper = cfgval('wallpaper', media + '/img/bg1.webp');
+	const login_title = striptags(cfgval('title', 'LuCI'));
+	const login_style = (cfgval('login_style', 'classic') == 'centered') ? 'centered' : 'classic';
+	const glass_on = cfgval('glass', '1') != '0';
+
+	function clampf(value, low, high) {
+		value = +value;
+		return (value < low) ? low : ((value > high) ? high : value);
+	}
+
+	const blur = clampf(cfgval('blur', '10'), 0, 100);
+	const transparency = clampf(cfgval('transparency', '0.5'), 0, 1);
 -%}
 
 {% if (bg_on): %}
 <div class="login-bg" style="background-image:url('{{ entityencode(wallpaper, true) }}')" aria-hidden="true"></div>
 {% endif %}
 
-<main class="login-page{{ bg_on ? ' has-bg' : '' }}">
+<main class="login-page{{ bg_on ? ' has-bg' : '' }}" data-style="{{ login_style }}" data-glass="{{ glass_on ? '1' : '0' }}"
+	style="--br-blur:{{ blur }}px;--br-glass-alpha:{{ sprintf('%.0f%%', transparency * 100) }}">
 	<div class="login-card">
 		<div class="login-head">
 			<span class="login-stamp" aria-hidden="true">BRUTAL</span>

@@ -6,6 +6,15 @@
 
 {%
 	import { getuid, getspnam } from 'luci.core';
+	import { cursor } from 'uci';
+
+	const cfg = cursor();
+	const cfgval = function(key, fallback) {
+		return cfg.get_first('brutal', 'global', key) ??
+		       cfg.get_first('brutal', 'login', key) ?? fallback;
+	};
+	const configured_mode = cfgval('mode', 'normal');
+	const mode = (configured_mode == 'light' || configured_mode == 'dark') ? configured_mode : 'normal';
 
 	const boardinfo = ubus.call('system', 'board');
 	const hostname = striptags(boardinfo?.hostname ?? '?');
@@ -20,12 +29,12 @@
 -%}
 
 <!DOCTYPE html>
-<html lang="{{ dispatcher.lang }}">
+<html lang="{{ dispatcher.lang }}" data-brutal-mode="{{ mode }}">
 	<head>
 		<meta charset="utf-8">
 		<title>{{ striptags(`${hostname}${pagetitle}`) }}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="color-scheme" content="light">
+		<meta name="color-scheme" content="{{ mode == 'dark' ? 'dark' : (mode == 'light' ? 'light' : 'light dark') }}">
 		<meta name="theme-color" content="#000000">
 		<meta name="darkreader-lock">
 		<meta name="robots" content="noindex, nofollow">

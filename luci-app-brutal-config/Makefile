@@ -10,7 +10,7 @@ PKG_NAME:=luci-app-brutal-config
 LUCI_NAME:=luci-app-brutal-config
 LUCI_BASENAME:=brutal-config
 
-PKG_VERSION:=1.1.0
+PKG_VERSION:=1.2.0
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=MinimaxFlora <zj18139624826@gmail.com>
@@ -41,6 +41,7 @@ define Build/Prepare/luci-app-brutal-config
 	$(CP) $(CURDIR)/LICENSE $(PKG_BUILD_DIR)/
 	$(FIND) $(PKG_BUILD_DIR) -type d -exec chmod 0755 {} +
 	$(FIND) $(PKG_BUILD_DIR) -type f -exec chmod 0644 {} +
+	$(FIND) $(PKG_BUILD_DIR)/root/etc/uci-defaults -type f -exec chmod 0755 {} +
 endef
 
 include $(TOPDIR)/feeds/luci/luci.mk

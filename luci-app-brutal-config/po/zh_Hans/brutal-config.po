@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: luci-app-brutal-config\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-11-23 12:00+0800\n"
+"PO-Revision-Date: 2026-11-23 13:20+0800\n"
 "Last-Translator: MinimaxFlora <zj18139624826@gmail.com>\n"
 "Language-Team: Chinese (Simplified)\n"
 "Language: zh_Hans\n"
@@ -15,9 +15,100 @@ msgid "Brutal Theme"
 msgstr "Brutal 主题"
 
 msgid ""
-"Login page appearance. The theme ships with working defaults; these options "
-"only override them."
-msgstr "登录页外观。主题自带可用的默认值，这里的选项仅用于覆盖。"
+"The theme keeps the neo-brutalist frame: ink borders, hard shadows and square "
+"corners. These options change the layout, the colour mode and the login panel "
+"material."
+msgstr "主题保留新野兽派的骨架：墨黑描边、硬阴影、零圆角。下面的选项只改布局、颜色模式和登录面板的材质。"
+
+msgid "Theme settings"
+msgstr "主题设置"
+
+msgid "Login page style"
+msgstr "登录页布局"
+
+msgid ""
+"Classic puts a full-height panel on the left edge; centered floats the card "
+"in the middle."
+msgstr "经典布局把整高面板贴到左侧；居中布局把卡片浮在页面中间。"
+
+msgid "Classic sidebar"
+msgstr "左侧栏（经典）"
+
+msgid "Centered card"
+msgstr "居中卡片"
+
+msgid "Theme mode"
+msgstr "主题模式"
+
+msgid "Follow the operating system, or pin light/dark for this router."
+msgstr "跟随系统，或给这台路由器固定亮色/暗色。"
+
+msgid "Follow system"
+msgstr "跟随系统"
+
+msgid "Light mode"
+msgstr "亮色"
+
+msgid "Dark mode"
+msgstr "暗色"
+
+msgid "Accent colour"
+msgstr "强调色"
+
+msgid ""
+"Used for the current submenu entry. All four accents come from the design "
+"brief."
+msgstr "用于当前二级菜单的选中态。四种颜色都来自设计稿。"
+
+msgid "Electric cyan"
+msgstr "电光青"
+
+msgid "Hot pink"
+msgstr "荧光粉"
+
+msgid "Acid lime"
+msgstr "酸柠绿"
+
+msgid "Tangerine"
+msgstr "橘橙"
+
+msgid "Frosted glass panel"
+msgstr "毛玻璃面板"
+
+msgid ""
+"Blur the wallpaper behind the login card or panel. The hard border and shadow "
+"stay."
+msgstr "模糊登录卡片后面的壁纸；硬描边和硬阴影保持不变。"
+
+msgid "Blur radius (px)"
+msgstr "模糊半径（px）"
+
+msgid "0 is sharp, 10 is the default frosted preset, 100 is very soft."
+msgstr "0 表示不模糊，10 是默认毛玻璃值，100 最柔。"
+
+msgid "Panel opacity"
+msgstr "面板不透明度"
+
+msgid "0 is only blur, 1 hides the wallpaper completely behind the panel."
+msgstr "0 只有模糊，1 完全不透出壁纸。"
+
+msgid "Dark mode panel"
+msgstr "暗色面板"
+
+msgid "Reuse the light values, or give the dark panel its own blur and opacity."
+msgstr "复用亮色的模糊和不透明度，或单独设置暗色面板。"
+
+msgid "Follow light mode"
+msgstr "跟随亮色"
+
+msgid "Custom"
+msgstr "自定义"
+
+msgid "[Dark mode] Blur radius (px)"
+msgstr "[暗色] 模糊半径（px）"
+
+msgid "[Dark mode] Panel opacity"
+msgstr "[暗色] 面板不透明度"
 
 msgid "Login page"
 msgstr "登录页"
