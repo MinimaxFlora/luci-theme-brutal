@@ -6,7 +6,7 @@
 					<div class="footer-content">
 						<a href="https://github.com/openwrt/luci" target="_blank" rel="noreferrer">Powered by {{ version.luciname }} ({{ version.luciversion }})</a>
 						<span class="footer-sep" aria-hidden="true">|</span>
-						<a href="https://github.com/MinimaxFlora/luci-theme-brutal" target="_blank" rel="noreferrer">BrutalTheme v1.3.1</a>
+						<a href="https://github.com/MinimaxFlora/luci-theme-brutal" target="_blank" rel="noreferrer">BrutalTheme v1.3.2</a>
 						<span class="footer-sep" aria-hidden="true">|</span>
 						<a href="{{ entityencode(version.disturl ?? '#', true) }}" target="_blank" rel="noreferrer">{{ version.distname }} {{ version.distversion }} ({{ version.distrevision }})</a>
 					</div>

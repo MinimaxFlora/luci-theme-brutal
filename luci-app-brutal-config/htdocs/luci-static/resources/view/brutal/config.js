@@ -8,7 +8,7 @@
 'require request';
 
 const TRANSPARENCY = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ];
-const VERSION = '1.3.1';
+const VERSION = '1.3.2';
 const RELEASES = 'https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest';
 function compareVersions(a, b) {
 	const pa = String(a || '').split('.').map((part) => parseInt(part, 10) || 0);

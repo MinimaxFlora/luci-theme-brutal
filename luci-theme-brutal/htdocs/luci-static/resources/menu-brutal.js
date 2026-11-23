@@ -16,6 +16,39 @@ const MENU_ICONS = {
 	logout: 'logout'
 };
 
+/* Wrap wide section tables so their horizontal scrollbar sits directly
+ * under the table, inside the card, instead of at the page bottom. */
+function wrapWideTables() {
+	document.querySelectorAll('.cbi-tblsection > table.cbi-section-table').forEach((table) => {
+		if (table.parentElement.classList.contains('brutal-table-scroll'))
+			return;
+
+		const wrapper = document.createElement('div');
+		wrapper.className = 'brutal-table-scroll';
+		table.parentNode.insertBefore(wrapper, table);
+		wrapper.appendChild(table);
+	});
+}
+
+let wrapScheduled = false;
+function scheduleTableWrap() {
+	if (wrapScheduled)
+		return;
+
+	wrapScheduled = true;
+	requestAnimationFrame(() => {
+		wrapScheduled = false;
+		wrapWideTables();
+	});
+}
+
+if (document.readyState === 'loading')
+	document.addEventListener('DOMContentLoaded', scheduleTableWrap);
+else
+	scheduleTableWrap();
+
+new MutationObserver(scheduleTableWrap).observe(document.body, { childList: true, subtree: true });
+
 return baseclass.extend({
 	__init__() {
 		this.bindChrome();

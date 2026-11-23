@@ -10,8 +10,8 @@ PKG_NAME:=luci-app-brutal-config
 LUCI_NAME:=luci-app-brutal-config
 LUCI_BASENAME:=brutal-config
 
-PKG_VERSION:=1.3.1
-PKG_RELEASE:=16
+PKG_VERSION:=1.3.2
+PKG_RELEASE:=2
 
 PKG_MAINTAINER:=MinimaxFlora <zj18139624826@gmail.com>
 LUCI_MAINTAINER:=MinimaxFlora <zj18139624826@gmail.com>

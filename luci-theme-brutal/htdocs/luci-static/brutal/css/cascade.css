@@ -1258,13 +1258,50 @@ a.label:hover {
 }
 
 .cbi-value-field,
-.cbi-value > output {
+.cbi-value > output,
+.cbi-value > div:not([class]) {
 	min-width: 0;
 	max-width: 100%;
 }
 
-.cbi-value > output {
+.cbi-value > output,
+.cbi-value > div:not([class]) {
 	grid-column: 2 / -1;
+}
+
+/* Label-less fields (MosDNS rules, nlbw protocol map) use the whole row. */
+.cbi-value:not(:has(> .cbi-value-title)):not(:has(> label)) > output,
+.cbi-value:not(:has(> .cbi-value-title)):not(:has(> label)) > .cbi-value-field,
+.cbi-value:not(:has(> .cbi-value-title)):not(:has(> label)) > div:not([class]) {
+	grid-column: 1 / -1;
+}
+
+/* Wide tables scroll inside their own card instead of widening the page. */
+.cbi-tblsection {
+	overflow-x: auto;
+	max-width: 100%;
+}
+
+/* Wide tables get a scroll wrapper directly under the table, so the
+ * scrollbar stays inside the card and the card border is never cut. */
+.brutal-table-scroll {
+	overflow-x: auto;
+	max-width: 100%;
+}
+
+#cbi-samba4-sambashare {
+	overflow: visible;
+}
+
+#cbi-samba4-sambashare .cbi-section-table {
+	width: 100%;
+	font-size: 12px;
+}
+
+#cbi-samba4-sambashare .cbi-section-table .th,
+#cbi-samba4-sambashare .cbi-section-table .td {
+	padding: 8px;
+	white-space: nowrap;
 }
 
 .cbi-value > .cbi-section,
