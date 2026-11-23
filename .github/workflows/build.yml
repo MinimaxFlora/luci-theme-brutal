@@ -113,14 +113,14 @@ jobs:
           CONFIG_ALL_KMODS=n
           CONFIG_ALL_NONSHARED=n
           CONFIG_AUTOREMOVE=n
+          CONFIG_LUCI_LANG_zh_Hans=y
           CONFIG_PACKAGE_luci-theme-brutal=m
           CONFIG_PACKAGE_luci-app-brutal-config=m
-          CONFIG_PACKAGE_luci-i18n-brutal-config-zh-cn=m
           EOF
           sed -i 's/^[[:space:]]*//' .config
           make defconfig
           for opt in luci-theme-brutal luci-app-brutal-config luci-i18n-brutal-config-zh-cn; do
-            grep -qx "CONFIG_PACKAGE_${opt}=m" .config ||
+            grep -q "CONFIG_PACKAGE_${opt}=[my]" .config ||
               { echo "::error::defconfig dropped ${opt}"; exit 1; }
           done
 
