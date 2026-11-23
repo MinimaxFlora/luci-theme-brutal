@@ -87,7 +87,7 @@ function expandHex(value) {
 }
 
 const ColorValue = form.Value.extend({
-	validate(value) {
+	validate(section_id, value) {
 		return expandHex(value) !== null || _('Expecting a valid HEX colour');
 	},
 
@@ -313,6 +313,20 @@ return view.extend({
 		o.depends('dark_glass_mode', 'custom');
 		o.retain = true;
 
+		o = s.option(form.Button, '_save', _('Save settings'));
+		o.inputstyle = 'apply';
+		o.inputtitle = _('Save current settings');
+		o.onclick = function() {
+			if (this.map.readonly)
+				return Promise.resolve();
+
+			return this.map.save(null, true).then(function() {
+				return ui.changes.apply(true);
+			}).catch(function(e) {
+				ui.addNotification(null, E('p', e.message));
+			});
+		};
+
 		const uploadBrand = (target, ev) => {
 			if (m.readonly)
 				return Promise.resolve();
@@ -444,5 +458,9 @@ return view.extend({
 		};
 
 		return m.render();
-	}
+	},
+
+	handleSaveApply: null,
+	handleSave: null,
+	handleReset: null
 });

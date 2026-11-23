@@ -304,3 +304,9 @@ msgstr ""
 
 msgid "Default"
 msgstr ""
+
+msgid "Save settings"
+msgstr ""
+
+msgid "Save current settings"
+msgstr ""

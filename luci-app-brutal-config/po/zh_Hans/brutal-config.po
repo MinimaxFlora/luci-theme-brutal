@@ -304,3 +304,9 @@ msgstr "保存主题模式失败。"
 
 msgid "Default"
 msgstr "默认"
+
+msgid "Save settings"
+msgstr "保存设置"
+
+msgid "Save current settings"
+msgstr "保存当前设置"

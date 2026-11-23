@@ -14,7 +14,7 @@ PKG_NAME:=luci-theme-brutal
 LUCI_NAME:=luci-theme-brutal
 
 PKG_VERSION:=1.3.1
-PKG_RELEASE:=3
+PKG_RELEASE:=4
 
 PKG_MAINTAINER:=MinimaxFlora <zj18139624826@gmail.com>
 LUCI_MAINTAINER:=MinimaxFlora <zj18139624826@gmail.com>
