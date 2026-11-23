@@ -1,0 +1,28 @@
+{
+	"luci-theme-brutal": {
+		"description": "Grant access to the Brutal theme mode switch and login backgrounds",
+		"read": {
+			"file": {
+				"/www/luci-static/brutal/background/*": [ "list" ]
+			},
+			"ubus": {
+				"luci.brutal": [ "avail" ],
+				"luci.brutal_appearance": [ "get" ],
+				"luci.brutal_branding": [ "get" ],
+				"luci.brutal_wallpaper": [ "get_url" ]
+			},
+			"uci": [ "brutal" ]
+		},
+		"write": {
+			"file": {
+				"/tmp/brutal_background.tmp": [ "write" ],
+				"/tmp/brutal_branding_*.png": [ "write" ]
+			},
+			"ubus": {
+				"luci.brutal": [ "remove", "rename" ],
+				"luci.brutal_appearance": [ "set" ],
+				"luci.brutal_branding": [ "set", "reset" ]
+			}
+		}
+	}
+}

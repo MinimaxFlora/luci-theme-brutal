@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# Copyright 2026 MinimaxFlora <zj18139624826@gmail.com>
+#
+# Licensed to the public under the Apache License 2.0.
+#
+# Theme mode switch used by the header dropdown. Only the "mode" key is
+# touched, and only normal/light/dark are accepted.
+
+. /usr/share/libubox/jshn.sh
+
+status() {
+	printf '{"result":%s,"mode":"%s"}\n' "$1" "${mode:-normal}"
+}
+
+case "$1" in
+list)
+	printf '%s\n' '{"get":{},"set":{"mode":""}}'
+	;;
+call)
+	case "$2" in
+		get|set) ;;
+		*) exit 1 ;;
+	esac
+
+	uci -q get brutal.global >/dev/null 2>&1 || { status 1; exit 0; }
+
+	mode="$(uci -q get brutal.global.mode)"
+	case "$mode" in
+		normal|light|dark) ;;
+		*) mode=normal ;;
+	esac
+
+	if [ "$2" = set ]; then
+		read -r input
+		json_load "$input" || { status 2; exit 0; }
+		json_get_var requested mode
+		case "$requested" in
+			normal|light|dark) ;;
+			*) status 2; exit 0 ;;
+		esac
+
+		if [ "$requested" != "$mode" ]; then
+			uci set brutal.global.mode="$requested" &&
+				uci commit brutal || { status 1; exit 0; }
+			mode="$requested"
+		fi
+	fi
+
+	status 0
+	;;
+esac

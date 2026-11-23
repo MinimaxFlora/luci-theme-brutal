@@ -7,12 +7,32 @@
 {%
 	import { getuid, getspnam } from 'luci.core';
 	import { cursor } from 'uci';
+	import * as fs from 'fs';
 
 	const cfg = cursor();
 	const cfgval = function(key, fallback) {
 		return cfg.get_first('brutal', 'global', key) ??
 		       cfg.get_first('brutal', 'login', key) ?? fallback;
 	};
+	const branding_dir = '/www' + media + '/branding';
+	const has_favicon = fs.access(branding_dir + '/favicon.png');
+	const has_logo = fs.access(branding_dir + '/logo.png');
+	const favicon_mtime = has_favicon ? (fs.stat(branding_dir + '/favicon.png')?.mtime ?? '') : '';
+	const logo_mtime = has_logo ? (fs.stat(branding_dir + '/logo.png')?.mtime ?? '') : '';
+
+	function accent_colour(value) {
+		if (match(value, /^#[0-9a-fA-F]{6}$/))
+			return value;
+
+		switch (value) {
+		case 'pink':   return '#ff006e';
+		case 'lime':   return '#ccff00';
+		case 'orange': return '#ff9500';
+		default:       return '#00d9ff';
+		}
+	}
+
+	const accent = accent_colour(cfgval('accent', '#00d9ff'));
 	const configured_mode = cfgval('mode', 'normal');
 	const mode = (configured_mode == 'light' || configured_mode == 'dark') ? configured_mode : 'normal';
 
@@ -29,7 +49,7 @@
 -%}
 
 <!DOCTYPE html>
-<html lang="{{ dispatcher.lang }}" data-brutal-mode="{{ mode }}">
+<html lang="{{ dispatcher.lang }}" data-brutal-mode="{{ mode }}" style="--br-accent:{{ accent }}">
 	<head>
 		<meta charset="utf-8">
 		<title>{{ striptags(`${hostname}${pagetitle}`) }}</title>
@@ -41,8 +61,12 @@
 		<meta name="referrer" content="strict-origin-when-cross-origin">
 		<link rel="stylesheet" href="{{ media }}/cascade.css">
 		<link rel="stylesheet" media="only screen and (max-device-width: 854px)" href="{{ media }}/mobile.css" />
+		{% if (has_favicon): %}
+		<link rel="icon" href="{{ media }}/branding/favicon.png?v={{ favicon_mtime }}" sizes="any">
+		{% else %}
 		<link rel="icon" href="{{ media }}/logo_48.png" sizes="48x48">
 		<link rel="icon" href="{{ media }}/logo.svg" sizes="any">
+		{% endif %}
 		{% if (node?.css): %}
 		<link rel="stylesheet" href="{{ resource }}/{{ node.css }}">
 		{% endif %}
@@ -61,7 +85,11 @@
 			<aside class="main-left" id="mainmenu" style="display:none" aria-label="{{ entityencode(_('Main navigation'), true) }}">
 				<div class="sidenav-header">
 					<a class="brand" href="/" title="{{ hostname }}">
-						<span class="brand-mark" aria-hidden="true"></span>
+						{% if (has_logo): %}
+					<img class="brand-logo" src="{{ media }}/branding/logo.png?v={{ logo_mtime }}" alt="">
+					{% else %}
+					<span class="brand-mark" aria-hidden="true"></span>
+					{% endif %}
 						<span class="brand-text">{{ hostname }}</span>
 					</a>
 				</div>
@@ -79,11 +107,7 @@
 
 							<div class="header-actions">
 								<div id="indicators"></div>
-								{% if (dispatcher.lookup("admin/system/brutal")): %}
-								<a class="header-config" href="{{ dispatcher.build_url("admin/system/brutal") }}" title="{{ entityencode(_('Brutal Theme'), true) }}" aria-label="{{ entityencode(_('Brutal Theme'), true) }}">
-									<span class="header-config-icon" aria-hidden="true"></span>
-								</a>
-								{% endif %}
+								<div id="brutal-appearance" hidden></div>
 							</div>
 						</div>
 					</div>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" width="320" height="180">
+  <rect width="320" height="180" fill="#f4f4f4"/>
+  <rect x="0" y="0" width="320" height="180" fill="url(#grid)"/>
+  <defs>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#d8d8d8"/>
+    </pattern>
+  </defs>
+  <rect x="150" y="0" width="170" height="180" fill="#cfcfcf"/>
+  <path d="M170 30h130v120H170z" fill="#ffffff" stroke="#000" stroke-width="3"/>
+  <path d="M182 44h60v8h-60zm0 16h100v6H182zm0 14h100v6H182z" fill="#000"/>
+  <rect x="0" y="0" width="132" height="180" fill="#ffffff" stroke="#000" stroke-width="4"/>
+  <rect x="14" y="16" width="52" height="12" fill="#000"/>
+  <rect x="14" y="40" width="86" height="10" fill="#000"/>
+  <rect x="14" y="58" width="60" height="6" fill="#000"/>
+  <path d="M14 78h104v2H14zm0 16h104v2H14z" fill="#000"/>
+  <rect x="14" y="104" width="104" height="22" fill="#ffffff" stroke="#000" stroke-width="2"/>
+  <rect x="14" y="136" width="104" height="26" fill="#000"/>
+</svg>

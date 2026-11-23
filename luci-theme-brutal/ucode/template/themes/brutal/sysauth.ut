@@ -8,6 +8,7 @@
 
 {%
 	import { cursor } from 'uci';
+	import * as fs from 'fs';
 
 	const cfg = cursor();
 	const cfgval = function(key, fallback) {
@@ -18,8 +19,51 @@
 	const hostname = striptags(boardinfo?.hostname ?? '?');
 	const firmware = striptags(`${version.distname ?? 'OpenWrt'} ${version.distversion ?? ''}`);
 	const bg_on = cfgval('background', '1') != '0';
-	const wallpaper = cfgval('wallpaper', media + '/img/bg1.webp');
+
+	const bg_dir = '/www/luci-static/brutal/background';
+
+	function pick_wallpaper(configured) {
+		if (configured && configured != 'random')
+			return configured;
+
+		let names = [];
+
+		try {
+			names = fs.lsdir(bg_dir) ?? [];
+		}
+		catch (e) {
+			names = [];
+		}
+
+		let usable = [];
+
+		for (let i = 0; i < length(names); i++) {
+			let name = names[i];
+
+			if (match(name, /\.(jpe?g|png|gif|webp|mp4|webm)$/i))
+				push(usable, name);
+		}
+
+		if (!length(usable))
+			return media + '/img/bg1.webp';
+
+		return media + '/background/' + usable[(+time()) % length(usable)];
+	}
+
+	let wallpaper = pick_wallpaper(cfgval('wallpaper', 'random'));
+
+	if (cfgval('online_wallpaper', 'none') != 'none') {
+		const online = ubus.call('luci.brutal_wallpaper', 'get_url') ?? {};
+
+		if (online.url)
+			wallpaper = online.url;
+	}
+
+	const bg_video = match(wallpaper, /\.(mp4|webm)$/i) != null;
 	const login_title = striptags(cfgval('title', 'LuCI'));
+	const branding_dir = '/www' + media + '/branding';
+	const has_logo = fs.access(branding_dir + '/logo.png');
+	const logo_mtime = has_logo ? (fs.stat(branding_dir + '/logo.png')?.mtime ?? '') : '';
 	const login_style = (cfgval('login_style', 'classic') == 'centered') ? 'centered' : 'classic';
 	const glass_on = cfgval('glass', '1') != '0';
 
@@ -33,13 +77,24 @@
 -%}
 
 {% if (bg_on): %}
-<div class="login-bg" style="background-image:url('{{ entityencode(wallpaper, true) }}')" aria-hidden="true"></div>
+<div class="login-bg" aria-hidden="true">
+	{% if (bg_video): %}
+	<video autoplay muted loop playsinline preload="metadata" poster="{{ media }}/img/bg1.webp">
+		<source src="{{ entityencode(wallpaper, true) }}" type="video/{{ match(wallpaper, /\.webm$/i) ? 'webm' : 'mp4' }}">
+	</video>
+	{% else %}
+	<img src="{{ entityencode(wallpaper, true) }}" alt="">
+	{% endif %}
+</div>
 {% endif %}
 
 <main class="login-page{{ bg_on ? ' has-bg' : '' }}" data-style="{{ login_style }}" data-glass="{{ glass_on ? '1' : '0' }}"
 	style="--br-blur:{{ blur }}px;--br-glass-alpha:{{ sprintf('%.0f%%', transparency * 100) }}">
 	<div class="login-card">
 		<div class="login-head">
+			{% if (has_logo): %}
+			<img class="login-logo" src="{{ media }}/branding/logo.png?v={{ logo_mtime }}" alt="">
+			{% endif %}
 			<span class="login-stamp" aria-hidden="true">BRUTAL</span>
 			<h1 class="login-title">{{ entityencode(login_title, true) }}</h1>
 			<p class="login-note">{{ hostname }} // ROUTER CONTROL</p>

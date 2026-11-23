@@ -1,0 +1,127 @@
+#!/bin/sh
+#
+# Copyright 2026 MinimaxFlora <zj18139624826@gmail.com>
+#
+# Licensed to the public under the Apache License 2.0.
+#
+# Branding assets: a square PNG favicon and a login logo. Files are stored
+# under fixed names so the theme can reference them without a manifest.
+
+. /usr/share/libubox/jshn.sh
+
+branding_dir='/www/luci-static/brutal/branding'
+upload_prefix='/tmp/brutal_branding_'
+
+status() {
+	json_init
+	json_add_int result "$1"
+	json_add_int favicon "$2"
+	json_add_int logo "$3"
+	json_add_int favicon_mtime "$4"
+	json_add_int logo_mtime "$5"
+	json_dump
+}
+
+read_state() {
+	favicon=0
+	logo=0
+	favicon_mtime=0
+	logo_mtime=0
+
+	[ -f "$branding_dir/favicon.png" ] && [ ! -L "$branding_dir/favicon.png" ] && {
+		favicon=1
+		favicon_mtime="$(stat -c %Y "$branding_dir/favicon.png" 2>/dev/null || echo 0)"
+	}
+	[ -f "$branding_dir/logo.png" ] && [ ! -L "$branding_dir/logo.png" ] && {
+		logo=1
+		logo_mtime="$(stat -c %Y "$branding_dir/logo.png" 2>/dev/null || echo 0)"
+	}
+}
+
+# PNG signature, 16..1024 px, IDAT and a complete IEND.
+validate_png() {
+	file="$1"
+	[ -f "$file" ] && [ ! -L "$file" ] || return 1
+	size="$(wc -c < "$file")"
+	[ "$size" -ge 67 ] && [ "$size" -le 1048576 ] || return 1
+
+	header="$(hexdump -v -n 29 -e '1/1 "%u "' "$file")" || return 1
+	set -- $header
+	[ "$#" -eq 29 ] || return 1
+	[ "$1 $2 $3 $4 $5 $6 $7 $8" = '137 80 78 71 13 10 26 10' ] || return 1
+	shift 8
+	[ "$1 $2 $3 $4 $5 $6 $7 $8" = '0 0 0 13 73 72 68 82' ] || return 1
+	shift 8
+	width=$(( $1 * 16777216 + $2 * 65536 + $3 * 256 + $4 ))
+	height=$(( $5 * 16777216 + $6 * 65536 + $7 * 256 + $8 ))
+	[ "$width" -ge 16 ] && [ "$height" -ge 16 ] || return 1
+	[ "$width" -le 1024 ] && [ "$height" -le 1024 ] || return 1
+
+	ending="$(tail -c 12 "$file" | hexdump -v -e '1/1 "%02x"')" || return 1
+	[ "$ending" = '0000000049454e44ae426082' ] && LC_ALL=C grep -q 'IDAT' "$file"
+}
+
+case "$1" in
+list)
+	printf '%s\n' '{"get":{},"set":{"target":"","token":""},"reset":{"target":""}}'
+	;;
+call)
+	method="$2"
+	case "$method" in
+		get|set|reset) ;;
+		*) exit 1 ;;
+	esac
+
+	read_state
+
+	if [ "$method" = get ]; then
+		status 0 "$favicon" "$logo" "$favicon_mtime" "$logo_mtime"
+		exit 0
+	fi
+
+	read -r input
+	json_load "$input" || { status 2 0 0 0 0; exit 0; }
+	json_get_var target target
+	case "$target" in
+		favicon|logo|both) ;;
+		*) status 2 0 0 0 0; exit 0 ;;
+	esac
+
+	if [ "$method" = set ]; then
+		json_get_var token token
+		printf '%s\n' "$token" | grep -Eq '^[0-9a-f]{32}$' || { status 2 0 0 0 0; exit 0; }
+		upload="${upload_prefix}${token}.png"
+		[ -f "$upload" ] && [ ! -L "$upload" ] || { status 2 0 0 0 0; exit 0; }
+		validate_png "$upload" || { status 2 0 0 0 0; exit 0; }
+		# A favicon must be square; a logo may keep its aspect ratio.
+		[ "$target" = logo ] || [ "$width" -eq "$height" ] || { status 2 0 0 0 0; exit 0; }
+	fi
+
+	mkdir -p "$branding_dir" || { status 1 0 0 0 0; exit 0; }
+	chmod 0755 "$branding_dir"
+
+	case "$method" in
+		set)
+			case "$target" in
+				favicon) mv -f "$upload" "$branding_dir/favicon.png" ;;
+				logo) mv -f "$upload" "$branding_dir/logo.png" ;;
+				both)
+					mv -f "$upload" "$branding_dir/favicon.png" &&
+						cp -f "$branding_dir/favicon.png" "$branding_dir/logo.png"
+					;;
+			esac || { status 1 0 0 0 0; exit 0; }
+			chmod 0644 "$branding_dir"/*.png 2>/dev/null
+			;;
+		reset)
+			case "$target" in
+				favicon) rm -f "$branding_dir/favicon.png" ;;
+				logo) rm -f "$branding_dir/logo.png" ;;
+				both) rm -f "$branding_dir/favicon.png" "$branding_dir/logo.png" ;;
+			esac
+			;;
+	esac
+
+	read_state
+	status 0 "$favicon" "$logo" "$favicon_mtime" "$logo_mtime"
+	;;
+esac

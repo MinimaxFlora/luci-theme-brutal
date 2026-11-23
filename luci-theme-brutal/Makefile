@@ -13,7 +13,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=luci-theme-brutal
 LUCI_NAME:=luci-theme-brutal
 
-PKG_VERSION:=1.2.0
+PKG_VERSION:=1.3.0
 PKG_RELEASE:=2
 
 PKG_MAINTAINER:=MinimaxFlora <zj18139624826@gmail.com>
@@ -81,6 +81,7 @@ define Build/Prepare/luci-theme-brutal
 	$(FIND) $(PKG_BUILD_DIR) -type d -exec chmod 0755 {} +
 	$(FIND) $(PKG_BUILD_DIR) -type f -exec chmod 0644 {} +
 	$(FIND) $(PKG_BUILD_DIR)/root/etc/uci-defaults -type f -exec chmod 0755 {} +
+	$(FIND) $(PKG_BUILD_DIR)/root/usr/libexec/rpcd -type f -exec chmod 0755 {} +
 endef
 
 include $(TOPDIR)/feeds/luci/luci.mk

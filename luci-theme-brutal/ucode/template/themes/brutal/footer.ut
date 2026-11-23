@@ -18,6 +18,7 @@
 			<ul class="breadcrumb pull-right" id="modemenu" style="display:none"></ul>
 		</footer>
 		<script>L.require('menu-brutal')</script>
+		<script>L.require('brutal-appearance')</script>
 		{% endif %}
 	</body>
 </html>

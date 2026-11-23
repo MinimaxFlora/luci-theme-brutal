@@ -1,0 +1,74 @@
+#!/bin/sh
+#
+# Copyright 2026 MinimaxFlora <zj18139624826@gmail.com>
+#
+# Licensed to the public under the Apache License 2.0.
+#
+# Background directory helper: free space, delete, and move an uploaded file
+# into /www/luci-static/brutal/background with a validated name.
+
+. /usr/share/libubox/jshn.sh
+
+bg_dir='/www/luci-static/brutal/background'
+tmp='/tmp/brutal_background.tmp'
+allowed='jpg jpeg png gif webp mp4 webm'
+
+status() {
+	printf '{"result":%s}\n' "$1"
+}
+
+extension() {
+	printf '%s' "${1##*.}" | tr 'A-Z' 'a-z'
+}
+
+valid_ext() {
+	case " $allowed " in
+		*" $1 "*) return 0 ;;
+	esac
+	return 1
+}
+
+case "$1" in
+list)
+	printf '%s\n' '{"avail":{},"remove":{"filename":""},"rename":{"newname":""}}'
+	;;
+call)
+	case "$2" in
+		avail|remove|rename) ;;
+		*) exit 1 ;;
+	esac
+
+	case "$2" in
+		avail)
+			avail="$(df -Pk /www 2>/dev/null | awk 'NR==2{print $4}')"
+			case "$avail" in ''|*[!0-9]*) avail=0 ;; esac
+			printf '{"result":0,"avail":%s}\n' "$((avail * 1024))"
+			;;
+		remove)
+			read -r input
+			json_load "$input" || { status 2; exit 0; }
+			json_get_var filename filename
+			case "$filename" in ''|.*|*/*|*..*) status 2; exit 0 ;; esac
+			valid_ext "$(extension "$filename")" || { status 2; exit 0; }
+			[ -f "$bg_dir/$filename" ] && [ ! -L "$bg_dir/$filename" ] || { status 2; exit 0; }
+			rm -f "$bg_dir/$filename" && status 0 || status 1
+			;;
+		rename)
+			read -r input
+			json_load "$input" || { status 2; exit 0; }
+			json_get_var newname newname
+			newname="$(basename "$newname")"
+			case "$newname" in ''|.*|*..*) status 2; exit 0 ;; esac
+			ext="$(extension "$newname")"
+			valid_ext "$ext" || { status 2; exit 0; }
+			[ -f "$tmp" ] || { status 2; exit 0; }
+			mkdir -p "$bg_dir" || { status 1; exit 0; }
+			dest="$bg_dir/$newname"
+			if [ -e "$dest" ]; then
+				dest="$bg_dir/${newname%.*}-$(date +%s).$ext"
+			fi
+			mv "$tmp" "$dest" && chmod 0644 "$dest" && status 0 || status 1
+			;;
+	esac
+	;;
+esac

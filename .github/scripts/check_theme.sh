@@ -28,7 +28,7 @@ trap 'rm -rf "$tmpdir"' EXIT HUP INT TERM
 
 say "shell and JavaScript syntax"
 
-for script in "$THEME"/root/etc/uci-defaults/* "$APP"/root/etc/uci-defaults/*; do
+for script in "$THEME"/root/etc/uci-defaults/* "$APP"/root/etc/uci-defaults/*               "$THEME"/root/usr/libexec/rpcd/*; do
 	[ -f "$script" ] || continue
 	sh -n "$script" || fail "shell syntax error in $script"
 done
@@ -55,6 +55,19 @@ grep -q 'id="mainmenu"' "$THEME/ucode/template/themes/brutal/header.ut" ||
 grep -q 'id="indicators"' "$THEME/ucode/template/themes/brutal/header.ut" ||
 	fail "header.ut lost the indicator strip"
 
+grep -q 'id="brutal-appearance"' "$THEME/ucode/template/themes/brutal/header.ut" ||
+	fail "header.ut lost the theme mode switch"
+
+if grep -q 'class="header-config' "$THEME/ucode/template/themes/brutal/header.ut"; then
+	fail "header.ut still links to the settings page from the header"
+fi
+
+grep -q "L.require('brutal-appearance')" "$THEME/ucode/template/themes/brutal/footer.ut" ||
+	fail "footer.ut does not load the appearance switch"
+
+grep -q 'luci.brutal_appearance' "$THEME/root/usr/share/rpcd/acl.d/luci-theme-brutal.json" ||
+	fail "theme ACL does not grant the appearance switch"
+
 if grep -q 'class="statusbar' "$THEME/ucode/template/themes/brutal/header.ut"; then
 	fail "header.ut still renders the removed status bar"
 fi
@@ -64,6 +77,9 @@ grep -q 'class="login-page' "$THEME/ucode/template/themes/brutal/sysauth.ut" ||
 
 grep -q 'class="login-bg"' "$THEME/ucode/template/themes/brutal/sysauth.ut" ||
 	fail "sysauth.ut does not render the wallpaper layer"
+
+grep -q 'pick_wallpaper' "$THEME/ucode/template/themes/brutal/sysauth.ut" ||
+	fail "sysauth.ut does not use the background directory"
 
 grep -q "get_first('brutal', 'global'" "$THEME/ucode/template/themes/brutal/sysauth.ut" ||
 	fail "sysauth.ut does not read /etc/config/brutal"
@@ -131,6 +147,12 @@ grep -q 'option login_style' "$APP/root/etc/config/brutal" ||
 grep -q '"path": "brutal/config"' "$APP/root/usr/share/luci/menu.d/luci-app-brutal-config.json" ||
 	fail "menu entry does not point at the brutal/config view"
 
+grep -q 'callBrandingGet' "$APP/htdocs/luci-static/resources/view/brutal/config.js" ||
+	fail "config view lost the branding section"
+
+grep -q 'BG_DIR' "$APP/htdocs/luci-static/resources/view/brutal/config.js" ||
+	fail "config view lost the background directory"
+
 grep -q '^# call BuildPackage - OpenWrt buildroot signature' "$APP/Makefile" ||
 	fail "app Makefile lost the literal BuildPackage marker"
 
@@ -143,6 +165,7 @@ errors = []
 for path in (
     "luci-app-brutal-config/root/usr/share/luci/menu.d/luci-app-brutal-config.json",
     "luci-app-brutal-config/root/usr/share/rpcd/acl.d/luci-app-brutal-config.json",
+    "luci-theme-brutal/root/usr/share/rpcd/acl.d/luci-theme-brutal.json",
 ):
     try:
         json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
@@ -193,6 +216,7 @@ contract = [
     ".alert-message", ".ifacebox", ".modal", "#modal_overlay",
     ".tabs", ".spinning", "[data-tab-title]",
     ".main-left", ".sidenav-header", ".showSide", ".darkMask",
+    ".brutal-appearance-trigger", ".login-bg img",
     '[data-brutal-mode="dark"]', '[data-style="classic"]', '[data-glass="1"]',
 ]
 for selector in contract:

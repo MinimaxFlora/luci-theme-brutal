@@ -1,0 +1,60 @@
+#!/bin/sh
+#
+# Copyright 2026 MinimaxFlora <zj18139624826@gmail.com>
+#
+# Licensed to the public under the Apache License 2.0.
+#
+# Online wallpaper URL for the login page. Only https URLs are returned.
+
+. /usr/share/libubox/jshn.sh
+
+src="$(uci -q get brutal.global.online_wallpaper || echo none)"
+key="$(uci -q get brutal.global.use_api_key)"
+WGET=/usr/libexec/wget-ssl
+[ -x "$WGET" ] || WGET="$(command -v uclient-fetch || command -v wget)"
+
+fetch() {
+	timeout -k 1 6 "$WGET" -T 5 -qO- "$1"
+}
+
+case "$1" in
+list)
+	printf '%s\n' '{"get_url":{}}'
+	;;
+call)
+	[ "$2" = get_url ] || exit 1
+
+	url=''
+	case "$src" in
+		bing)
+			for host in www.bing.com cn.bing.com; do
+				path="$(fetch "https://${host}/HPImageArchive.aspx?format=js&n=1" |
+					jsonfilter -qe '@.images[0].url')"
+				case "$path" in
+					/th\?id=*)
+						url="https://${host}${path}"
+						break
+						;;
+				esac
+			done
+			;;
+		wallhaven)
+			url="$(fetch 'https://wallhaven.cc/api/v1/search?resolutions=1920x1080&sorting=random' |
+				jsonfilter -qe '@.data[0].path')"
+			;;
+		unsplash)
+			[ -n "$key" ] && url="$(fetch "https://api.unsplash.com/photos/random?client_id=${key}" |
+				jsonfilter -qe '@.urls.regular')"
+			;;
+	esac
+
+	case "$url" in
+		https://*) ;;
+		*) url='' ;;
+	esac
+
+	json_init
+	json_add_string url "$url"
+	json_dump
+	;;
+esac

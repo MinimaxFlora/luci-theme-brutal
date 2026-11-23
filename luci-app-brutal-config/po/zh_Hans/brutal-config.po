@@ -123,14 +123,167 @@ msgid "Wallpaper path or URL"
 msgstr "壁纸路径或网址"
 
 msgid ""
-"A path under /www, for example /luci-static/brutal/img/bg1.webp, or an "
-"https:// URL."
-msgstr ""
-"可以是 /www 下的路径（例如 /luci-static/brutal/img/bg1.webp），也可以是 "
-"https:// 网址。"
+"Use \"random\" to rotate through the background directory, a path under "
+"/www, or an https:// URL."
+msgstr "填 random 从背景目录随机轮换；也可以填 /www 下的路径或 https:// 网址。"
 
 msgid "Login title"
 msgstr "登录标题"
 
 msgid "Large wordmark on the login card."
 msgstr "登录卡片上的大号标题。"
+
+msgid "Background directory (available space: %1024.2mB)"
+msgstr "背景目录（可用空间：%1024.2mB）"
+
+msgid ""
+"Upload jpg/png/gif/webp/mp4/webm files to %s. The login page picks one at "
+"random when the wallpaper setting is \"random\"."
+msgstr "把 jpg/png/gif/webp/mp4/webm 上传到 %s。壁纸设为 random 时，登录页每次随机取一张。"
+
+msgid "Upload background"
+msgstr "上传背景"
+
+msgid "Upload…"
+msgstr "上传…"
+
+msgid "Failed to upload file: %s."
+msgstr "上传文件失败：%s。"
+
+msgid "Filename"
+msgstr "文件名"
+
+msgid "Modified date"
+msgstr "修改时间"
+
+msgid "Size"
+msgstr "大小"
+
+msgid "Action"
+msgstr "操作"
+
+msgid "Delete"
+msgstr "删除"
+
+msgid "Background files"
+msgstr "背景文件"
+
+msgid "Failed to delete file: %s."
+msgstr "删除文件失败：%s。"
+
+msgid "No files found."
+msgstr "没有找到文件。"
+
+msgid "Branding"
+msgstr "品牌资源"
+
+msgid ""
+"PNG only, 16–1024 px, at most 1 MiB. The favicon must be square; the login "
+"logo keeps its aspect ratio."
+msgstr "仅支持 PNG，16–1024 像素，最大 1 MiB。网站图标必须是正方形；登录 Logo 保持比例。"
+
+msgid "Current assets"
+msgstr "当前资源"
+
+msgid "Favicon"
+msgstr "网站图标"
+
+msgid "Login logo"
+msgstr "登录页 Logo"
+
+msgid "not set"
+msgstr "未设置"
+
+msgid "Failed to save the image."
+msgstr "保存图片失败。"
+
+msgid "Upload favicon…"
+msgstr "上传网站图标…"
+
+msgid "Upload logo…"
+msgstr "上传 Logo…"
+
+msgid "Both"
+msgstr "两处共用"
+
+msgid "Use for both…"
+msgstr "同时用于两处…"
+
+msgid "Reset favicon"
+msgstr "重置网站图标"
+
+msgid "Reset logo"
+msgstr "重置 Logo"
+
+msgid "Reset"
+msgstr "重置"
+
+msgid "Failed to reset the image."
+msgstr "重置图片失败。"
+
+msgid "Upload background…"
+msgstr "上传背景…"
+
+msgid "Failed to upload the background."
+msgstr "上传背景失败。"
+
+msgid "Theme update"
+msgstr "主题更新"
+
+msgid "Not checked yet"
+msgstr "尚未检查"
+
+msgid "Checking…"
+msgstr "正在检查…"
+
+msgid "Check failed"
+msgstr "检查失败"
+
+msgid "Up to date (%s)"
+msgstr "已是最新（%s）"
+
+msgid "New version available: %s"
+msgstr "有新版本：%s"
+
+msgid "Current version"
+msgstr "当前版本"
+
+msgid "Check for updates"
+msgstr "检查更新"
+
+msgid "View release page"
+msgstr "查看发布页"
+
+msgid "Wallpaper source"
+msgstr "壁纸来源"
+
+msgid "Built-in"
+msgstr "内置"
+
+msgid "Bing"
+msgstr "必应"
+
+msgid "Unsplash"
+msgstr "Unsplash"
+
+msgid "Wallhaven"
+msgstr "Wallhaven"
+
+msgid "Unsplash API access key"
+msgstr "Unsplash API 密钥"
+
+msgid "Required when using Unsplash wallpapers."
+msgstr "使用 Unsplash 壁纸时必填。"
+
+msgid ""
+"Built-in rotates the files in the background directory. Bing, Unsplash and "
+"Wallhaven fetch an online image at login."
+msgstr "内置会轮换背景目录里的文件；必应、Unsplash、Wallhaven 在登录时拉取在线图片。"
+
+msgid ""
+"A HEX colour. The default #00d9ff is the electric cyan from the design brief; "
+"hot pink #ff006e, acid lime #ccff00 and tangerine #ff9500 also work."
+msgstr "HEX 颜色。默认 #00d9ff 是设计稿的电光青；荧光粉 #ff006e、酸柠绿 #ccff00、橘橙 #ff9500 也适用。"
+
+msgid "Expecting a valid HEX colour"
+msgstr "请输入有效的 HEX 颜色"

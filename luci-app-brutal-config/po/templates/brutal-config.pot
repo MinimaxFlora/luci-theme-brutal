@@ -123,12 +123,167 @@ msgid "Wallpaper path or URL"
 msgstr ""
 
 msgid ""
-"A path under /www, for example /luci-static/brutal/img/bg1.webp, or an "
-"https:// URL."
+"Use \"random\" to rotate through the background directory, a path under "
+"/www, or an https:// URL."
 msgstr ""
 
 msgid "Login title"
 msgstr ""
 
 msgid "Large wordmark on the login card."
+msgstr ""
+
+msgid "Background directory (available space: %1024.2mB)"
+msgstr ""
+
+msgid ""
+"Upload jpg/png/gif/webp/mp4/webm files to %s. The login page picks one at "
+"random when the wallpaper setting is \"random\"."
+msgstr ""
+
+msgid "Upload background"
+msgstr ""
+
+msgid "Upload…"
+msgstr ""
+
+msgid "Failed to upload file: %s."
+msgstr ""
+
+msgid "Filename"
+msgstr ""
+
+msgid "Modified date"
+msgstr ""
+
+msgid "Size"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Background files"
+msgstr ""
+
+msgid "Failed to delete file: %s."
+msgstr ""
+
+msgid "No files found."
+msgstr ""
+
+msgid "Branding"
+msgstr ""
+
+msgid ""
+"PNG only, 16–1024 px, at most 1 MiB. The favicon must be square; the login "
+"logo keeps its aspect ratio."
+msgstr ""
+
+msgid "Current assets"
+msgstr ""
+
+msgid "Favicon"
+msgstr ""
+
+msgid "Login logo"
+msgstr ""
+
+msgid "not set"
+msgstr ""
+
+msgid "Failed to save the image."
+msgstr ""
+
+msgid "Upload favicon…"
+msgstr ""
+
+msgid "Upload logo…"
+msgstr ""
+
+msgid "Both"
+msgstr ""
+
+msgid "Use for both…"
+msgstr ""
+
+msgid "Reset favicon"
+msgstr ""
+
+msgid "Reset logo"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Failed to reset the image."
+msgstr ""
+
+msgid "Upload background…"
+msgstr ""
+
+msgid "Failed to upload the background."
+msgstr ""
+
+msgid "Theme update"
+msgstr ""
+
+msgid "Not checked yet"
+msgstr ""
+
+msgid "Checking…"
+msgstr ""
+
+msgid "Check failed"
+msgstr ""
+
+msgid "Up to date (%s)"
+msgstr ""
+
+msgid "New version available: %s"
+msgstr ""
+
+msgid "Current version"
+msgstr ""
+
+msgid "Check for updates"
+msgstr ""
+
+msgid "View release page"
+msgstr ""
+
+msgid "Wallpaper source"
+msgstr ""
+
+msgid "Built-in"
+msgstr ""
+
+msgid "Bing"
+msgstr ""
+
+msgid "Unsplash"
+msgstr ""
+
+msgid "Wallhaven"
+msgstr ""
+
+msgid "Unsplash API access key"
+msgstr ""
+
+msgid "Required when using Unsplash wallpapers."
+msgstr ""
+
+msgid ""
+"Built-in rotates the files in the background directory. Bing, Unsplash and "
+"Wallhaven fetch an online image at login."
+msgstr ""
+
+msgid ""
+"A HEX colour. The default #00d9ff is the electric cyan from the design brief; "
+"hot pink #ff006e, acid lime #ccff00 and tangerine #ff9500 also work."
+msgstr ""
+
+msgid "Expecting a valid HEX colour"
 msgstr ""

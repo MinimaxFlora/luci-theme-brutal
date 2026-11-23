@@ -15,9 +15,9 @@
 |---|---|---|---|
 | ![login](docs/screenshots/login.png) | ![system](docs/screenshots/system.png) | ![mobile](docs/screenshots/overview-mobile.png) | ![menu](docs/screenshots/menu-mobile.png) |
 
-| 暗色（概览） | 暗色登录（居中 + 毛玻璃） |
-|---|---|
-| ![dark](docs/screenshots/dark.png) | ![login-dark](docs/screenshots/login-dark.png) |
+| 暗色（概览） | 暗色登录（居中 + 毛玻璃） | 右上角主题切换 |
+|---|---|---|---|
+| ![dark](docs/screenshots/dark.png) | ![login-dark](docs/screenshots/login-dark.png) | ![appearance](docs/screenshots/appearance.png) |
 
 ## 仓库结构
 
@@ -32,6 +32,9 @@ luci-app-brutal-config/     配置应用：登录页壁纸/标题
 
 ## 特性
 
+- **主题更新检查**：设置页顶部显示当前版本，点「检查更新」直接查 GitHub 最新 Release，并给出「已是最新 / 有新版本」和发布页入口。
+- **在线壁纸**：壁纸来源可选内置、必应、Unsplash、Wallhaven；内置会随机轮换 `background/` 目录里的图片或视频。
+- **右上角主题切换**：header 上的方形按钮打开亮色/暗色/跟随系统菜单，带图标和选中勾，写入 `brutal.global.mode`，不再跳转设置页。
 - **登录页两种布局**：`classic` 把整高面板贴在左边缘（Argon 风格），`centered` 把卡片浮在页面中间；两者都可以开毛玻璃（`backdrop-filter`），模糊半径和不透明度可调，暗色面板可单独设置。
 - **亮色 / 暗色模式**：`normal` 跟随系统，`light` / `dark` 固定；暗色是反相的新野兽派配色（近黑纸面、白色描边、灰色硬阴影），不是简单的反色滤镜。
 - **Argon 式布局**：左侧导航顶部是黑底品牌块，下面是带图标的一级菜单和可展开的二级菜单；内容区顶部有独立的黑色 header（指示器 + 主题设置入口），页面滚动时 header 常驻。移动端侧栏变成抽屉，黑幕遮罩 + `Esc` 关闭。
@@ -68,20 +71,20 @@ luci-app-brutal-config/     配置应用：登录页壁纸/标题
 
 ```sh
 # 25.12 / apk（包未签名，需 --allow-untrusted）
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal-1.2.0-r2.apk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config-1.2.0-r1.apk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn-1.2.0-r1.apk
-apk add --allow-untrusted ./luci-theme-brutal-1.2.0-r2.apk \
-  ./luci-app-brutal-config-1.2.0-r1.apk ./luci-i18n-brutal-config-zh-cn-1.2.0-r1.apk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal-1.3.0-r2.apk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config-1.3.0-r2.apk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn-1.3.0-r2.apk
+apk add --allow-untrusted ./luci-theme-brutal-1.3.0-r2.apk \
+  ./luci-app-brutal-config-1.3.0-r2.apk ./luci-i18n-brutal-config-zh-cn-1.3.0-r2.apk
 ```
 
 ```sh
 # 24.10 / opkg
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal_1.2.0-r2_all.ipk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config_1.2.0-r1_all.ipk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn_v1.2.0_all.ipk
-opkg install ./luci-theme-brutal_1.2.0-r2_all.ipk \
-  ./luci-app-brutal-config_1.2.0-r1_all.ipk ./luci-i18n-brutal-config-zh-cn_v1.2.0_all.ipk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal_1.3.0-r2_all.ipk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config_1.3.0-r2_all.ipk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn_v1.3.0_all.ipk
+opkg install ./luci-theme-brutal_1.3.0-r2_all.ipk \
+  ./luci-app-brutal-config_1.3.0-r2_all.ipk ./luci-i18n-brutal-config-zh-cn_v1.3.0_all.ipk
 ```
 
 主题的安装脚本会注册 `luci.themes.Brutal`，并在**全新安装**时把 `luci.main.mediaurlbase` 指到 `/luci-static/brutal`；升级不会覆盖你当前选中的主题。装完如果页面没变，清一次缓存并强制刷新：
@@ -121,18 +124,26 @@ echo 'src-git brutal https://github.com/MinimaxFlora/luci-theme-brutal.git' >> f
 |---|---|---|---|
 | 登录页布局 | `brutal.global.login_style` | `classic` | `classic` 左侧栏；`centered` 居中卡片 |
 | 主题模式 | `brutal.global.mode` | `normal` | `normal` 跟随系统；`light` / `dark` 固定 |
-| 强调色 | `brutal.global.accent` | `cyan` | `cyan` / `pink` / `lime` / `orange`，用于当前二级菜单 |
+| 强调色 | `brutal.global.accent` | `#00d9ff` | 任意 HEX，默认电光青；也可用 `pink` / `lime` / `orange` |
 | 毛玻璃面板 | `brutal.global.glass` | `1` | 关闭后登录卡片恢复纯色纸面 |
 | 模糊半径 | `brutal.global.blur` | `10` | 0–100 px，只在毛玻璃开启时生效 |
 | 面板不透明度 | `brutal.global.transparency` | `0.5` | 0–1，1 表示完全遮住壁纸 |
 | 暗色面板 | `brutal.global.dark_glass_mode` | `inherit` | `inherit` 复用亮色值；`custom` 单独设置 |
 | 暗色模糊 | `brutal.global.blur_dark` | `10` | `dark_glass_mode=custom` 时生效 |
 | 暗色不透明度 | `brutal.global.transparency_dark` | `0.5` | `dark_glass_mode=custom` 时生效 |
+| 壁纸来源 | `brutal.global.online_wallpaper` | `none` | `none` 内置 / `bing` / `unsplash` / `wallhaven` |
+| Unsplash 密钥 | `brutal.global.use_api_key` | 空 | 使用 Unsplash 时必填 |
 | 壁纸 | `brutal.global.background` | `1` | 关闭后登录页回到点阵纸底 |
 | 壁纸路径或网址 | `brutal.global.wallpaper` | `/luci-static/brutal/img/bg1.webp` | `/www` 下的路径或 `https://` URL |
 | 登录标题 | `brutal.global.title` | `LuCI` | 登录卡片上的大标题，`TypoGraphica` 渲染 |
 
-旧版本的 `brutal.login.*` 仍然兼容；安装 1.2.0 的配置应用时会自动把旧值迁移到 `brutal.global.*`。
+旧版本的 `brutal.login.*` 仍然兼容；安装 1.3.0 的配置应用时会自动把旧值迁移到 `brutal.global.*`。
+
+设置页还提供：
+
+- **登录页预览图**：切换 classic / centered 时实时更新布局示意。
+- **品牌资源**：上传 PNG 网站图标（必须正方形）和登录页 Logo，支持「同时用于两处」和一键重置；文件存在 `/www/luci-static/brutal/branding/`。
+- **背景目录**：显示 `/www` 可用空间，上传 gif/jpg/png/webp/mp4/webm，列出文件名/修改时间/大小并单独删除；文件存在 `/www/luci-static/brutal/background/`。
 
 配置文件是 `/etc/config/brutal`，作为 conffile 保存，升级保留你的修改。主题模板每次渲染时用 `uci` 读取它；没装配置应用时按默认值显示壁纸。
 
@@ -222,6 +233,7 @@ Apache License 2.0，见 [LICENSE](LICENSE)。
 A neo-brutalist LuCI theme with an Argon-style layout: a fixed sidebar with a brand block and icon menu, a compact top header, and a drawer on mobile.
 2px ink borders, zero-blur hard shadows, zero border radius, monospace body text.
 Ships Google Sans and TypoGraphica locally (no CDN), plus a login wallpaper and a separate `luci-app-brutal-config` settings app.
+The settings page includes update checking, login-layout previews, a HEX accent picker, online wallpaper sources, branding uploads and a managed background directory.
 The login page supports a classic side panel or a centered card, an optional frosted panel (blur + opacity), and light/dark modes.
 Works on OpenWrt 24.10 (ipk/opkg) and 25.12 (apk/apk-tools 3), architecture-independent (`PKGARCH=all`).
 Licensed under Apache-2.0.
