@@ -717,13 +717,12 @@ footer {
 	flex-wrap: wrap;
 	justify-content: flex-end;
 	text-align: right;
-	border-top: var(--br-line) solid var(--br-ink);
 	align-items: center;
 	gap: var(--br-gap);
 	margin-top: auto;
 	padding: 16px max(var(--br-pad), calc((100% - var(--br-page-max)) / 2 + var(--br-pad)));
-	background: var(--br-chrome);
-	color: var(--br-on-chrome);
+	background: transparent;
+	color: var(--br-ink);
 	font-size: 11px;
 	letter-spacing: 0.02em;
 }
