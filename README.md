@@ -71,20 +71,20 @@ luci-app-brutal-config/     配置应用：登录页壁纸/标题
 
 ```sh
 # 25.12 / apk（包未签名，需 --allow-untrusted）
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal-1.3.0-r2.apk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config-1.3.0-r2.apk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn-1.3.0-r2.apk
-apk add --allow-untrusted ./luci-theme-brutal-1.3.0-r2.apk \
-  ./luci-app-brutal-config-1.3.0-r2.apk ./luci-i18n-brutal-config-zh-cn-1.3.0-r2.apk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal-1.3.1-r2.apk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config-1.3.1-r2.apk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn-1.3.1-r2.apk
+apk add --allow-untrusted ./luci-theme-brutal-1.3.1-r2.apk \
+  ./luci-app-brutal-config-1.3.1-r2.apk ./luci-i18n-brutal-config-zh-cn-1.3.1-r2.apk
 ```
 
 ```sh
 # 24.10 / opkg
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal_1.3.0-r2_all.ipk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config_1.3.0-r2_all.ipk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn_v1.3.0_all.ipk
-opkg install ./luci-theme-brutal_1.3.0-r2_all.ipk \
-  ./luci-app-brutal-config_1.3.0-r2_all.ipk ./luci-i18n-brutal-config-zh-cn_v1.3.0_all.ipk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal_1.3.1-r2_all.ipk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config_1.3.1-r2_all.ipk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn_v1.3.1_all.ipk
+opkg install ./luci-theme-brutal_1.3.1-r2_all.ipk \
+  ./luci-app-brutal-config_1.3.1-r2_all.ipk ./luci-i18n-brutal-config-zh-cn_v1.3.1_all.ipk
 ```
 
 主题的安装脚本会注册 `luci.themes.Brutal`，并在**全新安装**时把 `luci.main.mediaurlbase` 指到 `/luci-static/brutal`；升级不会覆盖你当前选中的主题。装完如果页面没变，清一次缓存并强制刷新：
@@ -133,11 +133,10 @@ echo 'src-git brutal https://github.com/MinimaxFlora/luci-theme-brutal.git' >> f
 | 暗色不透明度 | `brutal.global.transparency_dark` | `0.5` | `dark_glass_mode=custom` 时生效 |
 | 壁纸来源 | `brutal.global.online_wallpaper` | `none` | `none` 内置 / `bing` / `unsplash` / `wallhaven` |
 | Unsplash 密钥 | `brutal.global.use_api_key` | 空 | 使用 Unsplash 时必填 |
-| 壁纸 | `brutal.global.background` | `1` | 关闭后登录页回到点阵纸底 |
-| 壁纸路径或网址 | `brutal.global.wallpaper` | `/luci-static/brutal/img/bg1.webp` | `/www` 下的路径或 `https://` URL |
-| 登录标题 | `brutal.global.title` | `LuCI` | 登录卡片上的大标题，`TypoGraphica` 渲染 |
 
-旧版本的 `brutal.login.*` 仍然兼容；安装 1.3.0 的配置应用时会自动把旧值迁移到 `brutal.global.*`。
+旧版本的 `brutal.login.*` 仍然兼容；安装 1.3.1 的配置应用时会自动把旧值迁移到 `brutal.global.*`。
+
+登录页不再有单独的标题/壁纸设置块（Argon 也没有）：左侧面板顶部固定显示「Logo + 主机名」，壁纸由「壁纸来源」和背景目录控制。
 
 设置页还提供：
 

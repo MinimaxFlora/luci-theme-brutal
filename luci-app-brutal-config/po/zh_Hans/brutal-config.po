@@ -287,3 +287,17 @@ msgstr "HEX 颜色。默认 #00d9ff 是设计稿的电光青；荧光粉 #ff006e
 
 msgid "Expecting a valid HEX colour"
 msgstr "请输入有效的 HEX 颜色"
+
+msgid "The theme keeps the neo-brutalist frame: ink borders, hard shadows and square corners."
+msgstr "主题保留新野兽派的骨架：墨黑描边、硬阴影、零圆角。"
+
+msgid ""
+"The theme keeps the neo-brutalist frame: ink borders, hard shadows and square "
+"corners. These options change the layout and the colour mode."
+msgstr "主题保留新野兽派的骨架：墨黑描边、硬阴影、零圆角。下面的选项只改布局和颜色模式。"
+
+msgid "Appearance"
+msgstr "外观"
+
+msgid "Unable to save the theme mode."
+msgstr "保存主题模式失败。"

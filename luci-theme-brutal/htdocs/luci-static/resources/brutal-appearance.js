@@ -79,7 +79,7 @@ return baseclass.extend({
 		this.trigger = E('button', {
 			'type': 'button',
 			'class': 'brutal-appearance-trigger',
-			'aria-label': _('Theme mode'),
+			'aria-label': _('Appearance'),
 			'aria-expanded': 'false',
 			'aria-controls': 'brutal-appearance-options',
 			'click': () => this.open(this.panel.hidden)
@@ -116,11 +116,8 @@ return baseclass.extend({
 			!this.writable ? E('p', { 'class': 'brutal-appearance-readonly' }, _('Read-only')) : ''
 		]);
 
-		this.message = E('span', { 'class': 'visually-hidden', 'role': 'status' });
-
 		this.root.appendChild(this.trigger);
 		this.root.appendChild(this.panel);
-		this.root.appendChild(this.message);
 
 		this.root.addEventListener('keydown', (ev) => {
 			if (ev.key === 'Escape' && !this.panel.hidden) {
@@ -164,7 +161,7 @@ return baseclass.extend({
 		this.radios.forEach((radio) => { radio.checked = (radio.value === mode); });
 
 		this.trigger.replaceChildren(this.icon(mode));
-		this.trigger.setAttribute('aria-label', _('Theme mode') + ': ' + LABELS[mode]);
+		this.trigger.setAttribute('aria-label', _('Appearance') + ': ' + LABELS[mode]);
 	},
 
 	saveMode(mode) {
@@ -176,7 +173,6 @@ return baseclass.extend({
 		this.busy = true;
 		this.radios.forEach((radio) => { radio.disabled = true; });
 		this.panel.setAttribute('aria-busy', 'true');
-		this.message.textContent = _('Saving theme mode…');
 		this.applyMode(mode);
 		this.open(false, true);
 
@@ -184,12 +180,11 @@ return baseclass.extend({
 			if (result.result !== 0 || result.mode !== mode)
 				throw new Error('save failed');
 
-			this.message.textContent = _('Theme mode saved.');
+			window.dispatchEvent(new CustomEvent('brutal-appearance-saved', { detail: { mode: mode } }));
 		}).catch(() => {
 			return callGet().catch(() => ({})).then((state) => {
 				this.applyMode((state.result === 0 && this.validMode(state.mode)) ? state.mode : previous);
-				this.message.textContent = _('Unable to save theme mode. Please try again.');
-				ui.addNotification(null, E('p', { 'role': 'alert' }, this.message.textContent), 'error');
+				ui.addNotification(null, E('p', { 'role': 'alert' }, _('Unable to save the theme mode.')), 'error');
 			});
 		}).finally(() => {
 			this.busy = false;

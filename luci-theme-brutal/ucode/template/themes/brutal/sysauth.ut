@@ -60,10 +60,10 @@
 	}
 
 	const bg_video = match(wallpaper, /\.(mp4|webm)$/i) != null;
-	const login_title = striptags(cfgval('title', 'LuCI'));
 	const branding_dir = '/www' + media + '/branding';
 	const has_logo = fs.access(branding_dir + '/logo.png');
 	const logo_mtime = has_logo ? (fs.stat(branding_dir + '/logo.png')?.mtime ?? '') : '';
+	const logo_url = has_logo ? (media + '/branding/logo.png?v=' + logo_mtime) : (media + '/logo.svg');
 	const login_style = (cfgval('login_style', 'classic') == 'centered') ? 'centered' : 'classic';
 	const glass_on = cfgval('glass', '1') != '0';
 
@@ -91,13 +91,9 @@
 <main class="login-page{{ bg_on ? ' has-bg' : '' }}" data-style="{{ login_style }}" data-glass="{{ glass_on ? '1' : '0' }}"
 	style="--br-blur:{{ blur }}px;--br-glass-alpha:{{ sprintf('%.0f%%', transparency * 100) }}">
 	<div class="login-card">
-		<div class="login-head">
-			{% if (has_logo): %}
-			<img class="login-logo" src="{{ media }}/branding/logo.png?v={{ logo_mtime }}" alt="">
-			{% endif %}
-			<span class="login-stamp" aria-hidden="true">BRUTAL</span>
-			<h1 class="login-title">{{ entityencode(login_title, true) }}</h1>
-			<p class="login-note">{{ hostname }} // ROUTER CONTROL</p>
+		<div class="login-brand">
+			<img class="login-logo" src="{{ entityencode(logo_url, true) }}" alt="">
+			<span class="login-host">{{ hostname }}</span>
 		</div>
 
 		<form method="post" action="{{ entityencode(http.getenv("REQUEST_URI"), true) }}" class="login-form">

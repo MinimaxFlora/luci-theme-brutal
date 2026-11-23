@@ -13,7 +13,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=luci-theme-brutal
 LUCI_NAME:=luci-theme-brutal
 
-PKG_VERSION:=1.3.0
+PKG_VERSION:=1.3.1
 PKG_RELEASE:=2
 
 PKG_MAINTAINER:=MinimaxFlora <zj18139624826@gmail.com>

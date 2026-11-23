@@ -7,7 +7,7 @@
 'require ui';
 
 const TRANSPARENCY = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ];
-const VERSION = '1.3.0';
+const VERSION = '1.3.1';
 const RELEASES = 'https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest';
 function compareVersions(a, b) {
 	const pa = String(a || '').split('.').map((part) => parseInt(part, 10) || 0);
@@ -147,7 +147,7 @@ return view.extend({
 
 	render(data) {
 		const m = new form.Map('brutal', _('Brutal Theme'),
-			_('The theme keeps the neo-brutalist frame: ink borders, hard shadows and square corners. These options change the layout, the colour mode and the login panel material.'));
+			_('The theme keeps the neo-brutalist frame: ink borders, hard shadows and square corners. These options change the layout and the colour mode.'));
 
 		const upd = m.section(form.TypedSection);
 		upd.render = () => {
@@ -235,6 +235,21 @@ return view.extend({
 		o.value('dark', _('Dark mode'));
 		o.default = 'normal';
 		o.rmempty = false;
+		o.renderWidget = function(section_id, option_index, cfgvalue) {
+			const option = this;
+			const node = form.ListValue.prototype.renderWidget.call(this, section_id, option_index, cfgvalue);
+			const sync = (event) => {
+				if (!event.detail || ![ 'normal', 'light', 'dark' ].includes(event.detail.mode))
+					return;
+				option.cfgvalue(section_id, event.detail.mode);
+				const select = node.matches('select') ? node : node.querySelector('select');
+
+				if (select)
+					select.value = event.detail.mode;
+			};
+			window.addEventListener('brutal-appearance-saved', sync);
+			return node;
+		};
 
 		o = s.option(ColorValue, 'accent', _('Accent colour'),
 			_('A HEX colour. The default #00d9ff is the electric cyan from the design brief; hot pink #ff006e, acid lime #ccff00 and tangerine #ff9500 also work.'));
@@ -297,29 +312,6 @@ return view.extend({
 		o.default = '0.5';
 		o.depends('dark_glass_mode', 'custom');
 		o.retain = true;
-
-		const login = m.section(form.TypedSection, 'global', _('Login page'));
-		login.anonymous = true;
-		login.addremove = false;
-
-		o = login.option(form.Flag, 'background', _('Wallpaper'),
-			_('Show the wallpaper behind the login form.'));
-		o.default = '1';
-		o.rmempty = false;
-
-		o = login.option(form.Value, 'wallpaper', _('Wallpaper path or URL'),
-			_('Use "random" to rotate through the background directory, a path under /www, or an https:// URL.'));
-		o.default = 'random';
-		o.depends('background', '1');
-		o.placeholder = 'random';
-		o.rmempty = false;
-
-		o = login.option(form.Value, 'title', _('Login title'),
-			_('Large wordmark on the login card.'));
-		o.default = 'LuCI';
-		o.placeholder = 'LuCI';
-		o.rmempty = false;
-
 
 		const uploadBrand = (target, ev) => {
 			if (m.readonly)

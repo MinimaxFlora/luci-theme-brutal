@@ -88,7 +88,7 @@
 						{% if (has_logo): %}
 					<img class="brand-logo" src="{{ media }}/branding/logo.png?v={{ logo_mtime }}" alt="">
 					{% else %}
-					<span class="brand-mark" aria-hidden="true"></span>
+					<img class="brand-logo" src="{{ media }}/logo.svg" alt="">
 					{% endif %}
 						<span class="brand-text">{{ hostname }}</span>
 					</a>

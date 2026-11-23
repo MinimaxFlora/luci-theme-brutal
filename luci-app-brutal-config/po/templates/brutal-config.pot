@@ -287,3 +287,17 @@ msgstr ""
 
 msgid "Expecting a valid HEX colour"
 msgstr ""
+
+msgid "The theme keeps the neo-brutalist frame: ink borders, hard shadows and square corners."
+msgstr ""
+
+msgid ""
+"The theme keeps the neo-brutalist frame: ink borders, hard shadows and square "
+"corners. These options change the layout and the colour mode."
+msgstr ""
+
+msgid "Appearance"
+msgstr ""
+
+msgid "Unable to save the theme mode."
+msgstr ""
