@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+# Copyright 2026 MinimaxFlora <zj18139624826@gmail.com>
+#
+# Licensed to the public under the Apache License 2.0.
+#
+# Seed the branding directory with the bundled logo so both the favicon and
+# the login logo are set out of the box. Existing uploads are never touched.
+
+[ -n "$IPKG_INSTROOT" ] && exit 0
+
+dir=/www/luci-static/brutal/branding
+src=/www/luci-static/brutal/logo_48.png
+
+[ -d "$dir" ] || mkdir -p "$dir"
+[ -f "$src" ] || exit 0
+
+[ -f "$dir/favicon.png" ] || cp "$src" "$dir/favicon.png"
+[ -f "$dir/logo.png" ] || cp "$src" "$dir/logo.png"
+
+exit 0

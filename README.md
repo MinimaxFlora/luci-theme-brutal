@@ -71,20 +71,20 @@ luci-app-brutal-config/     配置应用：登录页壁纸/标题
 
 ```sh
 # 25.12 / apk（包未签名，需 --allow-untrusted）
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal-1.3.1-r2.apk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config-1.3.1-r2.apk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn-1.3.1-r2.apk
-apk add --allow-untrusted ./luci-theme-brutal-1.3.1-r2.apk \
-  ./luci-app-brutal-config-1.3.1-r2.apk ./luci-i18n-brutal-config-zh-cn-1.3.1-r2.apk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal-1.3.1-r3.apk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config-1.3.1-r3.apk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn-1.3.1-r3.apk
+apk add --allow-untrusted ./luci-theme-brutal-1.3.1-r3.apk \
+  ./luci-app-brutal-config-1.3.1-r3.apk ./luci-i18n-brutal-config-zh-cn-1.3.1-r3.apk
 ```
 
 ```sh
 # 24.10 / opkg
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal_1.3.1-r2_all.ipk
-wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config_1.3.1-r2_all.ipk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-theme-brutal_1.3.1-r3_all.ipk
+wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-app-brutal-config_1.3.1-r3_all.ipk
 wget https://github.com/MinimaxFlora/luci-theme-brutal/releases/latest/download/luci-i18n-brutal-config-zh-cn_v1.3.1_all.ipk
-opkg install ./luci-theme-brutal_1.3.1-r2_all.ipk \
-  ./luci-app-brutal-config_1.3.1-r2_all.ipk ./luci-i18n-brutal-config-zh-cn_v1.3.1_all.ipk
+opkg install ./luci-theme-brutal_1.3.1-r3_all.ipk \
+  ./luci-app-brutal-config_1.3.1-r3_all.ipk ./luci-i18n-brutal-config-zh-cn_v1.3.1_all.ipk
 ```
 
 主题的安装脚本会注册 `luci.themes.Brutal`，并在**全新安装**时把 `luci.main.mediaurlbase` 指到 `/luci-static/brutal`；升级不会覆盖你当前选中的主题。装完如果页面没变，清一次缓存并强制刷新：

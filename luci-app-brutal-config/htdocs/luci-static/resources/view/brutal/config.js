@@ -346,15 +346,17 @@ return view.extend({
 		brand.render = () => {
 			const state = data[3] || {};
 			const preview = (kind, label) => {
-				if (!state[kind])
-					return E('div', { 'class': 'brutal-branding-empty' }, [ label + ': ' + _('not set') ]);
+				const custom = !!state[kind];
+				const fallback = (kind === 'favicon')
+					? '/luci-static/brutal/logo_48.png'
+					: '/luci-static/brutal/logo.svg';
+				const src = custom
+					? ('/luci-static/brutal/branding/' + kind + '.png?v=' + (state[kind + '_mtime'] || ''))
+					: fallback;
 
 				return E('figure', { 'class': 'brutal-branding-item' }, [
-					E('img', {
-						'src': '/luci-static/brutal/branding/' + kind + '.png?v=' + (state[kind + '_mtime'] || ''),
-						'alt': label
-					}),
-					E('figcaption', {}, label)
+					E('img', { 'src': src, 'alt': label }),
+					E('figcaption', {}, [ label + (custom ? '' : ' · ' + _('Default')) ])
 				]);
 			};
 			const button = (style, label, handler, disabled) => E('button', {

@@ -102,7 +102,6 @@ return baseclass.extend({
 			'class': 'brutal-appearance-panel',
 			'hidden': true
 		}, [
-			E('legend', { 'class': 'visually-hidden' }, _('Theme mode')),
 			...Object.keys(LABELS).map((mode, index) => E('label', {
 				'class': 'brutal-appearance-option',
 				'data-mode': mode,

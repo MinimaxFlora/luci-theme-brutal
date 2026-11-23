@@ -301,3 +301,6 @@ msgstr "外观"
 
 msgid "Unable to save the theme mode."
 msgstr "保存主题模式失败。"
+
+msgid "Default"
+msgstr "默认"
