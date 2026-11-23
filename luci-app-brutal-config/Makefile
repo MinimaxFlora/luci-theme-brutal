@@ -19,6 +19,15 @@ LUCI_URL:=https://github.com/MinimaxFlora/luci-theme-brutal
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 
+# Translation packages have their own version. Without this, luci.mk derives
+# it from git metadata, which the SDK checkout does not have, and produces
+# "0" as the version of luci-i18n-brutal-config-* .
+ifneq ($(CONFIG_USE_APK),)
+PKG_PO_VERSION:=$(PKG_VERSION)-r$(PKG_RELEASE)
+else
+PKG_PO_VERSION:=v$(PKG_VERSION)
+endif
+
 LUCI_TITLE:=Brutal Theme Settings
 LUCI_DESCRIPTION:=Login wallpaper and wordmark settings for the Brutal LuCI theme.
 LUCI_DEPENDS:=+luci-base +luci-theme-brutal
