@@ -1584,7 +1584,7 @@ input[type="radio"][disabled] {
 	color: var(--br-ink);
 }
 
-.cbi-dropdown > ul {
+.cbi-dropdown > ul:not(.dropdown) {
 	display: flex;
 	width: 100%;
 	margin: 0 !important;
@@ -1593,7 +1593,7 @@ input[type="radio"][disabled] {
 	overflow: hidden;
 }
 
-.cbi-dropdown > ul > li {
+.cbi-dropdown > ul:not(.dropdown) > li {
 	display: none;
 	flex: 1 1 auto;
 	align-items: center;
@@ -1617,8 +1617,35 @@ input[type="radio"][disabled] {
 	display: none;
 }
 
-.cbi-dropdown > ul > li[display],
-.cbi-dropdown[empty] > ul > li {
+/* Menu list: the trigger preview rules above must not turn it into a
+ * flex row with a collapsed height. */
+.cbi-dropdown > ul.dropdown {
+	display: block;
+	width: 100%;
+	margin: 0 !important;
+	padding: 0;
+	list-style: none;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+/* LuCI positions the menu upward with an inline bottom value; the base
+ * top offset must be cleared or the box collapses between both edges. */
+.cbi-dropdown > ul.dropdown[style*="bottom"] {
+	top: auto !important;
+}
+
+.cbi-dropdown > ul.dropdown > li {
+	display: block;
+	padding: 8px 12px;
+	color: var(--br-ink);
+	white-space: normal;
+	overflow: visible;
+	text-overflow: clip;
+}
+
+.cbi-dropdown > ul:not(.dropdown) > li[display],
+.cbi-dropdown[empty] > ul:not(.dropdown) > li {
 	display: flex !important;
 }
 
