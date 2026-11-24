@@ -1557,6 +1557,24 @@ input[type="radio"]:focus-visible {
 }
 
 input[type="checkbox"][disabled],
+/* Old Lua CBI forms (file transfer) put the label itself in .cbi-value
+ * and rely on inline widths; keep the three controls on one row and do
+ * not draw a card border under the label. */
+.cbi-value label.cbi-value {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	box-shadow: none;
+}
+
+.cbi-value:has(> input[type="file"]) {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
 input[type="radio"][disabled] {
 	background: var(--br-slab);
 	cursor: not-allowed;
@@ -1866,9 +1884,7 @@ input[type="radio"][disabled] {
 	width: 100%;
 	margin: 0 0 var(--br-gap);
 	border-collapse: collapse;
-	border-left: var(--br-line) solid var(--br-ink);
-	border-right: var(--br-line) solid var(--br-ink);
-	border-bottom: var(--br-line) solid var(--br-ink);
+	border: var(--br-line) solid var(--br-ink);
 	font-size: 13px;
 }
 
